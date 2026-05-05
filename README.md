@@ -15,6 +15,7 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 
 ## Documentation
 - [Data Model](docs/data-model.md)
+- [Dev log](docs/DEVLOG.md)
 
 ## Local Development
 
