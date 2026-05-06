@@ -1,5 +1,19 @@
 # Dev Log
 
+## 05/06/2026
+### AWS Environment Setup
+- Created IAM user `techno-archive-dev` with least privilege permissions
+- Attached policies: Lambda, DynamoDB, S3, API Gateway, CloudFormation, 
+  IAM, CloudWatch
+- Generated access keys and configured named AWS CLI profile
+- Updated samconfig.toml with profile and region (us-east-1)
+- Drew initial architecture diagram and committed to docs/
+
+### Decisions Made
+- Chose separate IAM user over separate AWS account to preserve 
+  existing learning environment
+- Chose us-east-1 as deployment region
+
 ## 05/05/2026
 ### Planning & Setup
 - Defined complete data model for all 6 entities: Artist, Record Label, 
@@ -23,3 +37,4 @@
 - Modify template.yaml for Detroit Techno Archive resources
 - Write first Lambda function for Artist entity (GET /artists)
 - Seed initial data
+
