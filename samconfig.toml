@@ -4,6 +4,8 @@ version = 0.1
 
 [default.global.parameters]
 stack_name = "detroit-techno-archive"
+profile = "techno-archive-dev"
+region = "us-east-1"
 
 [default.build.parameters]
 cached = true
