@@ -113,7 +113,7 @@ Resources:
           Properties:
             Path: /artists
             Method: get
-  
+
   GetArtistFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -127,6 +127,156 @@ Resources:
           Type: Api
           Properties:
             Path: /artists/{artist_id}
+            Method: get
+
+  GetLabelsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/labels/
+      Handler: get_labels.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref LabelsTable
+      Events:
+        GetLabels:
+          Type: Api
+          Properties:
+            Path: /labels
+            Method: get
+
+  GetLabelFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/labels/
+      Handler: get_label.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref LabelsTable
+      Events:
+        GetLabel:
+          Type: Api
+          Properties:
+            Path: /labels/{label_id}
+            Method: get
+
+  GetReleasesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/releases/
+      Handler: get_releases.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ReleasesTable
+      Events:
+        GetReleases:
+          Type: Api
+          Properties:
+            Path: /releases
+            Method: get
+
+  GetReleaseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/releases/
+      Handler: get_release.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ReleasesTable
+      Events:
+        GetRelease:
+          Type: Api
+          Properties:
+            Path: /releases/{release_id}
+            Method: get
+
+  GetVenuesFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/venues/
+      Handler: get_venues.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref VenuesTable
+      Events:
+        GetVenues:
+          Type: Api
+          Properties:
+            Path: /venues
+            Method: get
+
+  GetVenueFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/venues/
+      Handler: get_venue.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref VenuesTable
+      Events:
+        GetVenue:
+          Type: Api
+          Properties:
+            Path: /venues/{venue_id}
+            Method: get
+
+  GetEventsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/events/
+      Handler: get_events.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref EventsTable
+      Events:
+        GetEvents:
+          Type: Api
+          Properties:
+            Path: /events
+            Method: get
+
+  GetEventFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/events/
+      Handler: get_event.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref EventsTable
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /events/{event_id}
+            Method: get
+
+  GetGearListFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/gear/
+      Handler: get_gear_list.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref GearTable
+      Events:
+        GetGearList:
+          Type: Api
+          Properties:
+            Path: /gear
+            Method: get
+
+  GetGearItemFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/gear/
+      Handler: get_gear_item.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref GearTable
+      Events:
+        GetGearItem:
+          Type: Api
+          Properties:
+            Path: /gear/{gear_id}
             Method: get
 
 Outputs:
