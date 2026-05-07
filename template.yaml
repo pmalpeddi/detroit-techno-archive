@@ -2,44 +2,119 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: >
   detroit-techno-archive
+  A public REST API archiving the history of Detroit Techno and House music.
 
-  Sample SAM Template for detroit-techno-archive
-
-# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
 Globals:
   Function:
-    Timeout: 3
-
-    # You can add LoggingConfig parameters such as the Logformat, Log Group, and SystemLogLevel or ApplicationLogLevel. Learn more here https://docs.aws.amazon.com/serverless-application-model/latest/developerguide/sam-resource-function.html#sam-function-loggingconfig.
+    Timeout: 10
+    Runtime: python3.14
+    Architectures:
+      - x86_64
+    Environment:
+      Variables:
+        DYNAMODB_TABLE_ARTISTS: !Ref ArtistsTable
+        DYNAMODB_TABLE_LABELS: !Ref LabelsTable
+        DYNAMODB_TABLE_RELEASES: !Ref ReleasesTable
+        DYNAMODB_TABLE_VENUES: !Ref VenuesTable
+        DYNAMODB_TABLE_EVENTS: !Ref EventsTable
+        DYNAMODB_TABLE_GEAR: !Ref GearTable
     LoggingConfig:
       LogFormat: JSON
+
 Resources:
-  HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+
+  # ─── DynamoDB Tables ───────────────────────────────────────────
+
+  ArtistsTable:
+    Type: AWS::DynamoDB::Table
     Properties:
-      CodeUri: hello_world/
-      Handler: app.lambda_handler
-      Runtime: python3.14
-      Architectures:
-      - x86_64
+      TableName: detroit-techno-artists
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: artist_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: artist_id
+          KeyType: HASH
+
+  LabelsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: detroit-techno-labels
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: label_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: label_id
+          KeyType: HASH
+
+  ReleasesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: detroit-techno-releases
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: release_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: release_id
+          KeyType: HASH
+
+  VenuesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: detroit-techno-venues
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: venue_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: venue_id
+          KeyType: HASH
+
+  EventsTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: detroit-techno-events
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: event_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: event_id
+          KeyType: HASH
+
+  GearTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: detroit-techno-gear
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: gear_id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: gear_id
+          KeyType: HASH
+
+  # ─── Lambda Functions ───────────────────────────────────────────
+
+  GetArtistsFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/artists/
+      Handler: get_artists.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ArtistsTable
       Events:
-        HelloWorld:
-          Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
+        GetArtists:
+          Type: Api
           Properties:
-            Path: /hello
+            Path: /artists
             Method: get
 
 Outputs:
-  # ServerlessRestApi is an implicit API created out of Events key under Serverless::Function
-  # Find out more about other implicit resources you can reference within SAM
-  # https://github.com/awslabs/serverless-application-model/blob/master/docs/internals/generated_resources.rst#api
-  HelloWorldApi:
-    Description: API Gateway endpoint URL for Prod stage for Hello World 
-      function
-    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/hello/"
-  HelloWorldFunction:
-    Description: Hello World Lambda Function ARN
-    Value: !GetAtt HelloWorldFunction.Arn
-  HelloWorldFunctionIamRole:
-    Description: Implicit IAM Role created for Hello World function
-    Value: !GetAtt HelloWorldFunctionRole.Arn
+  ArtistsApi:
+    Description: API Gateway endpoint for artists
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/artists"
