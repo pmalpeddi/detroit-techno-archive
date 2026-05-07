@@ -113,6 +113,21 @@ Resources:
           Properties:
             Path: /artists
             Method: get
+  
+  GetArtistFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/artists/
+      Handler: get_artist.lambda_handler
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ArtistsTable
+      Events:
+        GetArtist:
+          Type: Api
+          Properties:
+            Path: /artists/{artist_id}
+            Method: get
 
 Outputs:
   ArtistsApi:
