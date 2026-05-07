@@ -1,5 +1,30 @@
 # Dev Log
 
+## 05/07/2026
+### Backend Foundation
+- Rewrote template.yaml replacing SAM boilerplate with full 
+  Detroit Techno Archive infrastructure
+- Deployed all 6 DynamoDB tables to AWS via SAM CLI
+- Wrote and deployed GET endpoints for all 6 entities (12 endpoints total)
+- Seeded Belleville Three artist data (Juan Atkins, Derrick May, 
+  Kevin Saunderson)
+- Tested live API endpoints via curl and browser
+- Added .aws-sam to .gitignore to prevent local paths leaking to GitHub
+
+### Decisions Made
+- Used PAY_PER_REQUEST billing on all DynamoDB tables — no capacity 
+  planning needed at this stage
+- Kept Lambda functions simple and single responsibility — one handler 
+  per endpoint
+- Skipped Postman testing for now — will revisit when POST/PUT/DELETE 
+  endpoints are added
+
+### Next Steps
+- Seed data for remaining 5 entities (labels, releases, venues, events, gear)
+- Write POST endpoints for admin data entry
+- Set up Cognito authentication for write endpoints
+- Set up S3 bucket for artist images
+
 ## 05/06/2026
 ### AWS Environment Setup
 - Created IAM user `techno-archive-dev` with least privilege permissions

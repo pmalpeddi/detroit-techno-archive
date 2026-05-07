@@ -13,6 +13,25 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | AWS CodePipeline | CI/CD pipeline |
 | AWS SAM | Local development and deployment |
 
+## API Endpoints
+
+Base URL: `https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod`
+
+| Method | Endpoint | Description |
+|---|---|---|
+| GET | /artists | List all artists |
+| GET | /artists/{artist_id} | Get artist by ID |
+| GET | /labels | List all labels |
+| GET | /labels/{label_id} | Get label by ID |
+| GET | /releases | List all releases |
+| GET | /releases/{release_id} | Get release by ID |
+| GET | /venues | List all venues |
+| GET | /venues/{venue_id} | Get venue by ID |
+| GET | /events | List all events |
+| GET | /events/{event_id} | Get event by ID |
+| GET | /gear | List all gear |
+| GET | /gear/{gear_id} | Get gear by ID |
+
 ## Documentation
 - [Data Model](docs/data-model.md)
 - [Architecture Diagram](docs/architecture.drawio.png)
