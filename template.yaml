@@ -97,6 +97,42 @@ Resources:
         - AttributeName: gear_id
           KeyType: HASH
 
+  # ─── Cognito ───────────────────────────────────────────────────
+
+  AdminUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: detroit-techno-admin-pool
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: true
+      Policies:
+        PasswordPolicy:
+          MinimumLength: 8
+          RequireUppercase: true
+          RequireLowercase: true
+          RequireNumbers: true
+          RequireSymbols: false
+      Schema:
+        - Name: email
+          AttributeDataType: String
+          Required: true
+          Mutable: true
+
+  AdminUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      ClientName: detroit-techno-admin-client
+      UserPoolId: !Ref AdminUserPool
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_PASSWORD_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+      TokenValidityUnits:
+        AccessToken: hours
+        RefreshToken: days
+      AccessTokenValidity: 24
+      RefreshTokenValidity: 30
+
   # ─── Lambda Functions ───────────────────────────────────────────
 
   GetArtistsFunction:
@@ -283,3 +319,11 @@ Outputs:
   ArtistsApi:
     Description: API Gateway endpoint for artists
     Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.${AWS::URLSuffix}/Prod/artists"
+
+  UserPoolClient:
+    Description: Cognito User Pool ID
+    Value: !Ref AdminUserPool
+
+  UserPoolCLientId:
+    Description: Cognito User Pool Client ID
+    Value: !Ref AdminUserPoolClient
