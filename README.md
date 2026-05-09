@@ -32,6 +32,12 @@ Base URL: `https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod`
 | GET | /gear | List all gear |
 | GET | /gear/{gear_id} | Get gear by ID |
 
+## Project Structure
+functions/ #Lambda handlers (one per endpoint)
+frontend/ # React web interface
+scripts/ # Data seeding scripts
+docs/ # Architecture diagrams and data model
+
 ## Documentation
 - [Data Model](docs/data-model.md)
 - [Architecture Diagram](docs/architecture.drawio.png)
@@ -43,11 +49,19 @@ Base URL: `https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod`
 - AWS CLI configured
 - SAM CLI installed
 - Docker running
+- Node.js installed
 
-### Run locally
+### Run API locally
 ```bash
 sam build --use-container
 sam local start-api
+```
+
+### Run frontend locally
+```bash
+cd frontend
+npm install
+npm start
 ```
 
 ### Deploy to AWS

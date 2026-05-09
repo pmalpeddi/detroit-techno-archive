@@ -1,5 +1,31 @@
 # Dev Log
 
+## 05/09/2026
+### Data & Auth
+- Wrote unified seed script covering all 6 entities — 5 artists, 3 labels, 3 releases, 2 venues, 4 gear items
+- Fixed Decimal serialization bug across all Lambda list endpoints — DynamoDB returns numbers as Decimal type which json.dumps can't handle by default, added custom DecimalEncoder
+- Added Cognito User Pool and User Pool Client to template.yaml
+- Attached AmazonCognitoPowerUser policy to techno-archive-dev IAM user
+- Deployed Cognito stack via SAM — User Pool ID: us-east-1_YE3s2IwJd
+- Created admin user in Cognito with permanent password
+- Added samconfig.toml to .gitignore to avoid leaking AWS account details
+
+### Frontend Init
+- Initialized React app in frontend/ using create-react-app
+- Installed react-router-dom and axios
+- Resolved WSL/Windows filesystem permission issues by building in Linux fs then moving to Windows fs
+
+### Decisions Made
+- AllowAdminCreateUserOnly set to true on Cognito pool — no public signups, admin-only access
+- Access tokens set to 24hr validity, refresh tokens to 30 days
+- Frontend lives inside the same repo under frontend/ for simplicity
+
+### Next Steps
+- Build React frontend — artists, labels, gear pages
+- Dark minimal UI aesthetic
+- Connect frontend to live API endpoints
+- Host on S3 + CloudFront
+
 ## 05/07/2026
 ### Backend Foundation
 - Rewrote template.yaml replacing SAM boilerplate with full 
