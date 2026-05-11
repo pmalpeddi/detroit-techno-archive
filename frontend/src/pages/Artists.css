@@ -1,0 +1,77 @@
+.artists-page { padding: 48px 0 80px; }
+
+.page-header { margin-bottom: 32px; }
+
+.loading {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #333;
+  padding: 80px 0;
+}
+
+.artists-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: #1a1a1a;
+}
+
+.artist-card {
+  background: #0c0c0c;
+  padding: 24px;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.artist-card:hover { background: #111; }
+
+.artist-img {
+  width: 100%;
+  aspect-ratio: 1;
+  background: #111;
+  border: 1px solid #1e1e1e;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: #222;
+  letter-spacing: 2px;
+}
+
+.artist-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.artist-alias {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: #D4FF00;
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.artist-origin {
+  font-size: 9px;
+  color: #444;
+  letter-spacing: 1px;
+  margin-bottom: 12px;
+}
+
+.artist-bio {
+  font-size: 10px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 14px;
+  letter-spacing: 0.3px;
+}
+
+.artist-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
