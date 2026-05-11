@@ -39,6 +39,9 @@ function Labels() {
                 </div>
               </div>
               <div className="label-meta">
+                {label.image_url && (
+                 <img src={label.image_url} alt={label.name} style={{ width: '100%', aspectRatio: '1', objectFit: 'cover', marginBottom: '12px' }} />
+                )}
                 <div className="label-origin">{label.origin}</div>
                 <div className="label-dist">{label.distribution}</div>
               </div>

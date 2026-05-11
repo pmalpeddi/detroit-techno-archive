@@ -23,6 +23,7 @@ function Navbar() {
           <NavLink to="/artists" className={({ isActive }) => isActive ? 'active' : ''}>Artists</NavLink>
           <NavLink to="/labels" className={({ isActive }) => isActive ? 'active' : ''}>Labels</NavLink>
           <NavLink to="/gear" className={({ isActive }) => isActive ? 'active' : ''}>Gear</NavLink>
+          <NavLink to="/venues" className={({ isActive }) => isActive ? 'active' : ''}>Venues</NavLink>
         </div>
       </nav>
     </header>

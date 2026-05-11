@@ -44,6 +44,9 @@ function Gear() {
         <div className="gear-grid">
           {filtered.map(item => (
             <div className="gear-card" key={item.gear_id}>
+              {item.image_url && (
+                <img src={item.image_url} alt={item.name} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', marginBottom: '16px' }} />
+              )}
               <div className="gear-type">{item.type}</div>
               <div className="gear-name">{item.name}</div>
               <div className="gear-mfr">{item.manufacturer} · {item.released_year}</div>

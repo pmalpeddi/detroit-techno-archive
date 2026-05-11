@@ -33,7 +33,12 @@ function Artists() {
           {artists.map(artist => (
             <Link to={`/artists/${artist.artist_id}`} key={artist.artist_id} style={{ textDecoration: 'none' }}>
             <div className="artist-card">
-              <div className="artist-img">{initials(artist.name)}</div>
+              <div className="artist-img">
+                {artist.image_url
+                ? <img src={artist.image_url} alt={artist.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                : initials(artist.name)
+                }
+              </div>
               <div className="artist-name">{artist.name}</div>
               {artist.aliases?.[0] && <div className="artist-alias">{artist.aliases[0]}</div>}
               <div className="artist-origin">{artist.origin} · {artist.active_years}</div>

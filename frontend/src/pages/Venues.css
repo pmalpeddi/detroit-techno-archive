@@ -1,0 +1,117 @@
+.venues-page { padding: 48px 0 80px; }
+.page-header { margin-bottom: 32px; }
+
+.loading {
+  font-size: 10px;
+  letter-spacing: 3px;
+  color: #333;
+  padding: 80px 0;
+}
+
+.venues-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: #1a1a1a;
+}
+
+.venue-row {
+  background: #0c0c0c;
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 0;
+  transition: background 0.15s;
+  cursor: pointer;
+}
+
+.venue-row:hover { background: #111; }
+
+.venue-img {
+  width: 100%;
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+
+.venue-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.venue-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #111;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 48px;
+  color: #1e1e1e;
+}
+
+.venue-info {
+  padding: 28px 32px;
+}
+
+.venue-status-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.venue-status {
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border: 1px solid;
+}
+
+.venue-status.active { color: #D4FF00; border-color: #D4FF00; }
+.venue-status.closed { color: #555; border-color: #333; }
+.venue-status.historical { color: #888; border-color: #444; }
+
+.venue-type {
+  font-size: 8px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #333;
+}
+
+.venue-name {
+  font-family: 'Bebas Neue', sans-serif;
+  font-size: 36px;
+  letter-spacing: 2px;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.venue-address {
+  font-size: 9px;
+  color: #444;
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.venue-years {
+  font-size: 9px;
+  color: #D4FF00;
+  letter-spacing: 1px;
+  margin-bottom: 16px;
+}
+
+.venue-significance {
+  font-size: 10px;
+  color: #555;
+  line-height: 1.8;
+  margin-bottom: 16px;
+  letter-spacing: 0.3px;
+}
+
+.venue-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
