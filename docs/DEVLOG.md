@@ -2,6 +2,10 @@
 
 ## 05/11/2026
 
+### Demo (5/11/2026)
+
+https://github.com/user-attachments/assets/d5fb2579-3827-455b-9244-1ad0d06d2c0a
+
 ### S3 Media Bucket
 - Created S3 bucket `detroit-techno-archive-media` in us-east-1
 - Disabled public access block and attached bucket policy for public read
