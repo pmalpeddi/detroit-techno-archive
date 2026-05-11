@@ -49,7 +49,8 @@ function Home() {
         </div>
         <div className="artist-grid">
           {artists.map(artist => (
-            <div className="artist-card" key={artist.artist_id}>
+            <Link to={`/artists/${artist.artist_id}`} key={artist.artist_id} style={{ textDecoration: 'none' }}>
+            <div className="artist-card">
               <div className="artist-img">{initials(artist.name)}</div>
               <div className="artist-name">{artist.name}</div>
               <div className="artist-alias">{artist.aliases?.[0]}</div>
@@ -58,6 +59,7 @@ function Home() {
                 {artist.genres?.slice(0, 2).map(g => <span className="tag" key={g}>{g}</span>)}
               </div>
             </div>
+            </Link>
           ))}
         </div>
       </section>

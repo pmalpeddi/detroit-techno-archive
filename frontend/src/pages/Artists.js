@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import './Artists.css';
 
 const API = 'https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod';
@@ -30,7 +31,8 @@ function Artists() {
       ) : (
         <div className="artists-grid">
           {artists.map(artist => (
-            <div className="artist-card" key={artist.artist_id}>
+            <Link to={`/artists/${artist.artist_id}`} key={artist.artist_id} style={{ textDecoration: 'none' }}>
+            <div className="artist-card">
               <div className="artist-img">{initials(artist.name)}</div>
               <div className="artist-name">{artist.name}</div>
               {artist.aliases?.[0] && <div className="artist-alias">{artist.aliases[0]}</div>}
@@ -40,6 +42,7 @@ function Artists() {
                 {artist.genres?.slice(0, 2).map(g => <span className="tag" key={g}>{g}</span>)}
               </div>
             </div>
+            </Link>
           ))}
         </div>
       )}
