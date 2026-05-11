@@ -12,6 +12,8 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | AWS Cognito | Admin authentication |
 | AWS CodePipeline | CI/CD pipeline |
 | AWS SAM | Local development and deployment |
+| React | Frontend web interface |
+| React Router | Client-side routing |
 
 ## API Endpoints
 
@@ -37,6 +39,16 @@ functions/ #Lambda handlers (one per endpoint)
 frontend/ # React web interface
 scripts/ # Data seeding scripts
 docs/ # Architecture diagrams and data model
+
+## Pages
+| Page | Route | Description |
+|---|---|---|
+| Home | / | Hero, stats, featured artists |
+| Artists | /artists | All artists grid |
+| Artist Detail | /artists/:id | Full artist profile with releases |
+| Labels | /labels | Record labels chronological list |
+| Venues | /venues | Venues with images and history |
+| Gear | /gear | Machines with filter by type |
 
 ## Documentation
 - [Data Model](docs/data-model.md)
