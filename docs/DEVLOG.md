@@ -1,5 +1,35 @@
 # Dev Log
 
+## 05/11/2026
+
+### S3 Media Bucket
+- Created S3 bucket `detroit-techno-archive-media` in us-east-1
+- Disabled public access block and attached bucket policy for public read
+- Created folder structure: artists/, gear/, labels/, releases/, venues/
+- Uploaded JPEG images for all 5 artists, 4 gear items, 3 labels, 3 releases, 2 venues
+- Wrote `scripts/update_image_urls.py` to update image_url fields in DynamoDB via boto3
+- All 17 image_url fields updated across 5 DynamoDB tables
+
+### Frontend — Pages & Images
+- Built Artist detail page with full profile, biography, aliases, gear sidebar
+- Added release cross-referencing on artist detail page — fetches releases table and matches by artist name, alias, and associated acts
+- Release artwork now shows inline next to notable tracks
+- Added image rendering across all pages — artist grid, gear grid, labels list, venues list
+- Built Venues page with full-width image, status badge, historical significance
+- Added Releases section to artist detail page showing matched release artwork
+- Skipped standalone Releases page — releases live in artist context instead
+
+### Decisions Made
+- Cross-referenced releases to artists via three match conditions: artist name, aliases_used, and associated_acts — catches Inner City releases on Kevin Saunderson's page
+- Venues page uses horizontal layout with large image left, info right — matches the editorial feel of the Labels page
+- No standalone Releases page for now — too few entries to justify, better in artist context
+
+### Next Steps
+- Deploy frontend to S3 + CloudFront
+- Add POST/PUT endpoints for admin data entry protected by Cognito
+- Seed more data — more artists, labels, releases
+- Add Events page
+
 ## 05/09/2026
 ### Data & Auth
 - Wrote unified seed script covering all 6 entities — 5 artists, 3 labels, 3 releases, 2 venues, 4 gear items
