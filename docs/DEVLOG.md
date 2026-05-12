@@ -1,5 +1,31 @@
 # Dev Log
 
+## 05/12/2026
+
+### Data & Artists
+- Seeded 5 new artists: Carl Craig, Richie Hawtin, Jeff Mills, Robert Hood, Mad Mike Banks
+- Uploaded press photos for all 5 new artists to S3 artists/ folder
+- Uploaded Belleville Three group photo to S3 for hero section
+- Wrote `scripts/seed_artists_2.py` and `scripts/update_artist_images_2.py`
+- Archive now has 10 artists total
+
+### Frontend — Hero Section
+- Added Belleville Three photo to hero section — two column layout, text left, image right
+- Added founders tagline beneath the image: "Juan Atkins, Derrick May, and Kevin Saunderson. Three kids from Belleville, Michigan who changed music forever. The founders of Detroit Techno."
+- Removed samconfig.toml from Git tracking via git rm --cached
+
+### Decisions Made
+- Belleville Three treated as a historical reference in the hero section rather than a standalone artist entry — the three are already individually archived
+- Richie Hawtin included despite being from Windsor, Ontario — directly across the Detroit River, deeply embedded in the Detroit scene
+
+### Next Steps
+- Continue tweaking frontend design — still in progress, layout and visual details being refined
+- Deploy frontend to S3 + CloudFront to get the site live on the internet
+- Add POST/PUT endpoints for admin data entry protected by Cognito
+- Seed more data — more labels, releases, venues, events
+- Add Events page
+- Add Underground Resistance as a label entry
+
 ## 05/11/2026
 
 ### Demo (5/11/2026)
