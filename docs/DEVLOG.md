@@ -1,5 +1,47 @@
 # Dev Log
 
+## 05/18/2026
+
+### Data — Wave 2 Seed
+- Added `scripts/seed_data_2.py` — 6 artists, 8 labels, 6 releases, 4 venues, 8 gear items
+- Added `scripts/update_image_urls_2.py` — image URLs for all 34 new entries
+- Uploaded 34 images to S3 across artists/, gear/, labels/, releases/, venues/ folders
+- Ran both scripts via WSL — all records seeded and image URLs updated clean
+- Archive now has 16 artists, 11 labels, 9 releases, 6 venues, 12 gear items
+
+### New Artists
+- Stacey Pullen, Chez Damier, Alan Oldham (DJ T-1000), Claude Young
+- Cybotron (Juan Atkins + Rick Davis) — added as standalone act, direct precursor to Detroit Techno
+- Underground Resistance — added as collective entry separate from Mad Mike Banks individual entry
+
+### New Labels
+- Planet E, Plus 8, Minus, Axis, Underground Resistance, M-Plant, Tresor, Network Records
+- Closes all dangling label_id references from seed_artists.py
+
+### New Releases
+- Cybotron: Alleys of Your Mind (1981), Clear (1983)
+- Underground Resistance: Electronic Warfare (1991)
+- Plastikman: Spastik (1993)
+- Jeff Mills: The Bells (1996)
+- 69 (Carl Craig): At Les (1992)
+
+### New Venues
+- The Shelter, Packard Automotive Plant, Elektricity, Submerge
+
+### New Gear
+- Korg MS-20, Roland SH-101, Oberheim DMX, Akai MPC60, Korg M1, E-mu SP-1200, Yamaha DX7, Technics SL-1200
+
+### Decisions Made
+- Underground Resistance exists as both an artist entry and a label entry — intentional, reflects reality
+- Submerge added as a venue entry — primarily a distribution hub and record store, Museum of Techno housed inside
+- Cybotron seeded as its own artist entry rather than just referenced in Juan Atkins' biography
+
+### Next Steps
+- Deploy frontend to S3 + CloudFront to get the site live
+- Add POST/PUT endpoints for admin data entry protected by Cognito
+- Add Events page
+- Add Events entity and seed data
+
 ## 05/12/2026
 
 ### Data & Artists
