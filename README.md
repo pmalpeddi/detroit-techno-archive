@@ -7,13 +7,19 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | AWS Lambda | Serverless functions handling API logic |
 | AWS API Gateway | Exposes public REST API endpoints |
 | AWS DynamoDB | Primary database for all entities |
-| AWS S3 | Stores artist images and album artwork |
-| AWS CloudFront | CDN layer for performance |
-| AWS Cognito | Admin authentication |
-| AWS CodePipeline | CI/CD pipeline |
-| AWS SAM | Local development and deployment |
+| AWS S3 | Stores artist images, album artwork, and frontend build |
+| AWS CloudFront | CDN layer for frontend delivery and performance |
+| AWS Cognito | Admin authentication for protected endpoints |
+| AWS CodePipeline | CI/CD pipeline orchestration |
+| AWS CodeBuild | Builds and tests application code |
+| AWS CloudWatch | Monitoring, dashboards, and alerting |
+| AWS X-Ray | Distributed tracing across Lambda and API Gateway |
+| AWS SAM | Serverless application framework for Lambda and API Gateway |
+| Terraform | Infrastructure as Code for all non-serverless AWS resources |
 | React | Frontend web interface |
 | React Router | Client-side routing |
+| GitLab CI | Mirrored repository and additional CI/CD pipeline |
+
 
 ## API Endpoints
 
@@ -34,11 +40,14 @@ Base URL: `https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod`
 | GET | /gear | List all gear |
 | GET | /gear/{gear_id} | Get gear by ID |
 
+```
 ## Project Structure
-functions/ #Lambda handlers (one per endpoint)
-frontend/ # React web interface
-scripts/ # Data seeding scripts
-docs/ # Architecture diagrams and data model
+functions/    # Lambda handlers
+frontend/     # React web interface
+scripts/      # Data seeding scripts
+infra/        # Terraform definitions
+docs/         # Architecture diagrams
+```
 
 ## Pages
 | Page | Route | Description |
@@ -49,11 +58,62 @@ docs/ # Architecture diagrams and data model
 | Labels | /labels | Record labels chronological list |
 | Venues | /venues | Venues with images and history |
 | Gear | /gear | Machines with filter by type |
+| Events | /events | Coming soon |
+
+---
+
+## Roadmap
+ 
+### Phase 1 — Planning ✅
+- Defined data model for all entities
+- Created GitHub repo
+- Set up AWS environment with IAM roles
+- Installed and configured SAM CLI
+- Drew architecture diagram
+### Phase 2 — Backend Foundation ✅
+- Created all DynamoDB tables via SAM
+- Wrote Lambda functions for GET endpoints across all 6 entities
+- Exposed 12 endpoints through API Gateway
+- Deployed via SAM CLI
+### Phase 3 — Data Population ✅ (Ongoing)
+- Seeded artists, labels, releases, venues, and gear
+- Uploaded images to S3 across all entity folders
+- Validated data structure and API responses
+### Phase 4 — Auth & Admin (In Progress)
+- Cognito User Pool deployed via SAM
+- Admin-only user pool — no public signups
+- POST/PUT endpoints for admin data entry — in progress
+### Phase 5 — Frontend (In Progress)
+- React app with React Router
+- Artist pages, Label pages, Gear pages, Venues pages
+- Hero section with Belleville Three
+- Deploy to S3 + CloudFront — pending
+- Events page — pending
+### Phase 6 — CI/CD Pipeline
+- CodePipeline triggered by GitHub push
+- CodeBuild runs tests and builds React frontend
+- SAM deploys updated Lambda functions
+- S3 sync deploys frontend build
+- CloudFront cache invalidation post-deploy
+- GitLab mirror with GitLab CI pipeline
+### Phase 7 — Observability
+- CloudWatch Dashboards for API and Lambda metrics
+- CloudWatch Alarms for error rate thresholds
+- AWS X-Ray distributed tracing across Lambda and API Gateway
+### Phase 8 — Production Quality
+- Terraform for all infrastructure provisioning
+- Full README with architecture diagram
+- Blog post / LinkedIn article about the build
+- Submit to Detroit Techno community groups
+
+---
 
 ## Documentation
 - [Data Model](docs/data-model.md)
 - [Architecture Diagram](docs/architecture.drawio.png)
 - [Dev log](docs/DEVLOG.md)
+
+---
 
 ## Local Development
 
@@ -62,6 +122,7 @@ docs/ # Architecture diagrams and data model
 - SAM CLI installed
 - Docker running
 - Node.js installed
+- Terraform installed
 
 ### Run API locally
 ```bash

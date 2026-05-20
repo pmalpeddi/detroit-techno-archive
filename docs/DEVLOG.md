@@ -1,5 +1,54 @@
 # Dev Log
 
+## 05/20/2026
+05/20/2026
+Architecture & Roadmap Revision
+Revisited project architecture and roadmap — making several additions to better reflect real world cloud engineering practices and expand the project's value as a portfolio piece
+Infrastructure as Code
+
+Adding Terraform alongside SAM CLI for infrastructure provisioning
+Terraform will own VPC, S3, CloudFront, Cognito, and DynamoDB resources
+SAM will remain responsible for Lambda functions and API Gateway
+Separating infra concerns from application concerns — standard practice in production environments
+
+CI/CD Pipeline Expansion
+
+Original plan was CodePipeline + CodeBuild — keeping both but fleshing out the full pipeline
+Full pipeline flow:
+
+GitHub push triggers CodePipeline
+CodeBuild runs tests and builds React frontend
+SAM deploys updated Lambda functions
+S3 sync deploys frontend build
+CloudFront cache invalidation runs automatically post-deploy
+
+
+Adding GitLab as a mirrored repository to get hands on experience with GitLab CI/CD pipelines
+GitLab is widely used in enterprise DevOps environments — worth knowing
+
+Observability
+
+Adding Phase 7 to the roadmap focused entirely on observability
+CloudWatch Dashboards for API metrics and Lambda performance
+CloudWatch Alarms for error rate thresholds
+AWS X-Ray for distributed tracing across Lambda functions and API Gateway
+None of this was in the original plan — adding it because monitoring is a non-negotiable in real production systems
+
+Decisions Made
+
+Terraform added not to replace SAM but to complement it — SAM handles serverless, Terraform handles everything else, this is a realistic split used in real engineering teams
+GitLab added as a mirror rather than a full migration — GitHub stays primary, GitLab gives CI/CD pipeline experience without disrupting existing workflow
+Observability added as its own phase rather than tacked onto Phase 6 — it deserves dedicated attention and is a major resume differentiator
+All of these additions are intentional for portfolio purposes — the goal is to build something that reflects what cloud engineers actually work with day to day
+
+Next Steps
+
+Finish POST/PUT endpoints for admin data entry protected by Cognito
+Deploy frontend to S3 + CloudFront
+Add Events page and seed Events data
+Continue seeding artist, label, release, venue, and gear data
+Begin Phase 6 CI/CD pipeline setup once frontend is live
+
 ## 05/18/2026
 
 ### Data — Wave 2 Seed
