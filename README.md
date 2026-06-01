@@ -1,5 +1,9 @@
 # detroit-techno-archive
-A public REST API and web interface archiving the history of Detroit Techno and House music. Covers artists, record labels, venues, releases, events, and gear. Built on AWS serverless architecture 
+A public REST API and web interface archiving the history of Detroit Techno and House music. Covers artists, record labels, venues, releases, events, and gear. Built on AWS serverless architecture.
+
+**Live:** https://d24pywqdzwrvb1.cloudfront.net
+
+---
 
 ## Tech Stack
 | Service | Purpose |
@@ -18,8 +22,8 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | Terraform | Infrastructure as Code for all non-serverless AWS resources |
 | React | Frontend web interface |
 | React Router | Client-side routing |
-| GitLab CI | Mirrored repository and additional CI/CD pipeline |
 
+---
 
 ## API Endpoints
 
@@ -40,8 +44,10 @@ Base URL: `https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod`
 | GET | /gear | List all gear |
 | GET | /gear/{gear_id} | Get gear by ID |
 
-```
+---
+
 ## Project Structure
+```
 functions/    # Lambda handlers
 frontend/     # React web interface
 scripts/      # Data seeding scripts
@@ -58,48 +64,54 @@ docs/         # Architecture diagrams
 | Labels | /labels | Record labels chronological list |
 | Venues | /venues | Venues with images and history |
 | Gear | /gear | Machines with filter by type |
-| Events | /events | Coming soon |
+| Events | /events | Festivals, club nights, and events |
 
 ---
 
 ## Roadmap
- 
+
 ### Phase 1 — Planning ✅
 - Defined data model for all entities
 - Created GitHub repo
 - Set up AWS environment with IAM roles
 - Installed and configured SAM CLI
 - Drew architecture diagram
+
 ### Phase 2 — Backend Foundation ✅
 - Created all DynamoDB tables via SAM
 - Wrote Lambda functions for GET endpoints across all 6 entities
 - Exposed 12 endpoints through API Gateway
 - Deployed via SAM CLI
+
 ### Phase 3 — Data Population ✅ (Ongoing)
-- Seeded artists, labels, releases, venues, and gear
+- Seeded 22 artists, 13 labels, 19 releases, 6 venues, 16 gear items, 1 event
 - Uploaded images to S3 across all entity folders
 - Validated data structure and API responses
+
 ### Phase 4 — Auth & Admin (In Progress)
 - Cognito User Pool deployed via SAM
 - Admin-only user pool — no public signups
 - POST/PUT endpoints for admin data entry — in progress
-### Phase 5 — Frontend (In Progress)
+
+### Phase 5 — Frontend ✅
 - React app with React Router
-- Artist pages, Label pages, Gear pages, Venues pages
+- Artists, Labels, Gear, Venues, Events pages
+- Artist detail pages with release cross-referencing
 - Hero section with Belleville Three
-- Deploy to S3 + CloudFront — pending
-- Events page — pending
+- Deployed to S3 + CloudFront — https://d24pywqdzwrvb1.cloudfront.net
+
 ### Phase 6 — CI/CD Pipeline
 - CodePipeline triggered by GitHub push
 - CodeBuild runs tests and builds React frontend
 - SAM deploys updated Lambda functions
 - S3 sync deploys frontend build
 - CloudFront cache invalidation post-deploy
-- GitLab mirror with GitLab CI pipeline
+
 ### Phase 7 — Observability
 - CloudWatch Dashboards for API and Lambda metrics
 - CloudWatch Alarms for error rate thresholds
 - AWS X-Ray distributed tracing across Lambda and API Gateway
+
 ### Phase 8 — Production Quality
 - Terraform for all infrastructure provisioning
 - Full README with architecture diagram
@@ -111,7 +123,7 @@ docs/         # Architecture diagrams
 ## Documentation
 - [Data Model](docs/data-model.md)
 - [Architecture Diagram](docs/architecture.drawio.png)
-- [Dev log](docs/DEVLOG.md)
+- [Dev Log](docs/DEVLOG.md)
 
 ---
 

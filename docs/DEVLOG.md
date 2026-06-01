@@ -1,5 +1,64 @@
 # Dev Log
 
+## 06/01/2026
+
+### Data — Wave 3 Seed
+- Added `scripts/seed_data_3.py` — 6 artists, 2 labels, 10 releases, 1 event, 4 gear items
+- Added `scripts/update_image_urls_3.py` — image URLs for all wave 3 entries
+- Added `scripts/fix_label_founders.py` — hotfix correcting founder field type mismatch on wave 3 labels
+- Uploaded images to S3 across artists/, labels/, releases/, gear/, events/ folders
+- Created events/ folder in S3 media bucket for the first time
+- Archive now has 22 artists, 13 labels, 19 releases, 6 venues, 16 gear items, 1 event
+### New Artists
+- Drexciya — Gerald Donald & James Stinson, foundational Detroit Electro act
+- DJ Rolando — Underground Resistance member, known for Jaguar (1999)
+- Suburban Knight (James Pennington) — Transmat artist, dark techno pioneer
+- Octave One (Lenny & Lawrence Burden) — Detroit Techno duo, founders of 430 West
+- Anthony "Shake" Shakir — longtime Detroit producer, Metroplex circle
+- Aux 88 (Tommy Hamilton & Keith Tucker) — definitive Detroit Electro duo
+### New Labels
+- 430 West Records — Octave One's artist-owned imprint
+- Direct Beat — Detroit Electro label co-founded by Aux 88 and DJ Stingray
+### New Releases
+- Robert Hood: Minimal Nation (1994)
+- Jeff Mills: Waveform Transmission Vol. 1 (1992)
+- Underground Resistance: Galaxy 2 Galaxy (1993)
+- Drexciya: The Unknown Aquatic Habitat (1994)
+- Aztec Mystic (DJ Rolando): Jaguar (1999)
+- Reese (Kevin Saunderson): Just Want Another Chance (1988) — origin of the Reese Bassline
+- Model 500: Interference (1990)
+- Paperclip People (Carl Craig): The Climax (1994)
+- Suburban Knight: The Art of Stalking (1990)
+- Aux 88: Is It Man or Machine? (1995)
+### New Events
+- Movement Music Festival 2026 — 20th anniversary edition, Hart Plaza, May 23–25 2026
+- Headlined by Carl Cox, Sara Landry, Dom Dolla
+- 115+ artists across 6 stages including Juan Atkins, Richie Hawtin, Carl Craig, Kevin Saunderson
+### New Gear
+- Sequential Circuits Prophet-5, Moog Source, Ensoniq ESQ-1, Oberheim Matrix-1000
+### Frontend — Events Page
+- Built `Events.js` and `Events.css` — full Events page matching existing design system
+- Events display with image, status badge, date, type, description, historical significance, and lineup tags
+- Added Events route to `App.js` and Events link to `Navbar.js`
+### Frontend — S3 + CloudFront Deployment
+- Built React app via `npm run build`
+- Created S3 bucket `detroit-techno-archive-frontend` in us-east-1
+- Synced build/ folder to S3 via `aws s3 sync`
+- Disabled Block Public Access and attached public read bucket policy
+- Attached CloudFrontFullAccess policy to `techno-archive-dev` IAM user via root account
+- Created CloudFront distribution (ID: EMP03ACQED95W) pointing at frontend S3 bucket
+- Configured 403 → index.html custom error response for React Router client-side routing
+- Frontend is live at https://d24pywqdzwrvb1.cloudfront.net
+### Decisions Made
+- Dropped GitLab mirror plan — GitHub + AWS CodePipeline covers CI/CD needs without added friction
+- Events page built now that real data exists (Movement 2026) rather than leaving it as coming soon
+- Reese Bassline origin record (Just Want Another Chance) prioritized as a release entry — culturally significant beyond Detroit Techno into jungle and drum and bass
+### Next Steps
+- Add POST/PUT admin endpoints protected by Cognito authorizer
+- Set up CI/CD pipeline via CodePipeline and CodeBuild
+- Seed more data — Kenny Larkin, more releases, more venues
+- CloudWatch monitoring and alarms
+
 ## 05/20/2026
 05/20/2026
 Architecture & Roadmap Revision
