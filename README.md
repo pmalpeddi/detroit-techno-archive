@@ -93,12 +93,13 @@ docs/         # Architecture diagrams
 - Admin-only user pool — no public signups
 - POST/PUT endpoints for admin data entry — in progress
 
-### Phase 5 — Frontend ✅
+### Phase 5 — Frontend (In Progress)
 - React app with React Router
 - Artists, Labels, Gear, Venues, Events pages
 - Artist detail pages with release cross-referencing
 - Hero section with Belleville Three
 - Deployed to S3 + CloudFront — https://d24pywqdzwrvb1.cloudfront.net
+- UI polish and refinement ongoing
 
 ### Phase 6 — CI/CD Pipeline
 - CodePipeline triggered by GitHub push
