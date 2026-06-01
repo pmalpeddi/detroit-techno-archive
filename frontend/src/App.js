@@ -7,6 +7,7 @@ import Labels from './pages/Labels';
 import Gear from './pages/Gear';
 import ArtistDetail from './pages/ArtistDetail';
 import Venues from './pages/Venues';
+import Events from './pages/Events';
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
         <Route path="/gear" element={<Gear />} />
         <Route path="/artists/:artist_id" element={<ArtistDetail />} />
         <Route path="/venues" element={<Venues />} />
+        <Route path="/events" element={<Events />} />
       </Routes>
     </Router>
   );
