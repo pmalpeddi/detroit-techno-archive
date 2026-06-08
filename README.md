@@ -123,8 +123,10 @@ docs/         # Architecture diagrams
 
 ## Documentation
 - [Data Model](docs/data-model.md)
-  [![Architecture Diagram](docs/architecture.png)](docs/architecture.svg)
 - [Dev Log](docs/DEVLOG.md)
+
+  [![Architecture Diagram](docs/architecture.png)](docs/architecture.svg)
+
 
 ---
 
