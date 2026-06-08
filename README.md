@@ -123,7 +123,7 @@ docs/         # Architecture diagrams
 
 ## Documentation
 - [Data Model](docs/data-model.md)
-- [Architecture Diagram](docs/architecture.drawio.png)
+- [Architecture Diagram](docs/architecture.svg)
 - [Dev Log](docs/DEVLOG.md)
 
 ---
