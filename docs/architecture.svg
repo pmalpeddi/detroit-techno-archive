@@ -1,0 +1,204 @@
+<svg width="100%" viewBox="0 0 680 665" role="img" xmlns="http://www.w3.org/2000/svg">
+  <title>Detroit Techno Archive — AWS Architecture (target state)</title>
+  <desc>Frontend flow: browser fetches React app via CloudFront CDN backed by S3. API flow: browser makes API calls to API Gateway, routed to Lambda, which reads/writes DynamoDB and S3 media, and emits telemetry to CloudWatch and X-Ray. Cognito protects write endpoints. CI/CD: GitHub triggers CodePipeline, CodeBuild runs tests and builds, then deploys backend via SAM and frontend via S3 sync and CloudFront cache invalidation.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <style>
+      text { font-family: Arial, Helvetica, sans-serif; }
+      .ttl { font-size: 12px; font-weight: 700; }
+      .sub { font-size: 10px; }
+      .lbl { font-size: 9.5px; fill: #777; }
+      .ng rect { fill: #f1efea; stroke: #888780; stroke-width: 0.5; }
+      .ng .ttl { fill: #3d3d3a; }
+      .ng .sub { fill: #5f5e5a; }
+      .np rect { fill: #eeedfe; stroke: #7f77dd; stroke-width: 0.5; }
+      .np .ttl { fill: #3c3489; }
+      .np .sub { fill: #534ab7; }
+      .nt rect { fill: #e1f5ee; stroke: #1d9e75; stroke-width: 0.5; }
+      .nt .ttl { fill: #085041; }
+      .nt .sub { fill: #0f6e56; }
+      .nc rect { fill: #faece7; stroke: #d85a30; stroke-width: 0.5; }
+      .nc .ttl { fill: #712b13; }
+      .nc .sub { fill: #993c1d; }
+      .na rect { fill: #faeeda; stroke: #ba7517; stroke-width: 0.5; }
+      .na .ttl { fill: #633806; }
+      .na .sub { fill: #854f0b; }
+      .nb rect { fill: #e6f1fb; stroke: #378add; stroke-width: 0.5; }
+      .nb .ttl { fill: #0c447c; }
+      .nb .sub { fill: #185fa5; }
+      .a  { fill: none; stroke: #aaa; stroke-width: 1; }
+      .ad { fill: none; stroke: #aaa; stroke-width: 1; stroke-dasharray: 4 3; }
+      .ac { fill: none; stroke: #999; stroke-width: 1; stroke-dasharray: 2 2; }
+    </style>
+  </defs>
+
+  <!-- LEGEND -->
+  <text class="lbl" x="40" y="22">— —  frontend flow</text>
+  <text class="lbl" x="155" y="22">——  API / data</text>
+  <text class="lbl" x="252" y="22">· · ·  CI/CD deploy</text>
+
+  <!-- ═══════════════════════════════════
+       FRONTEND ROW  (y=80)
+  ═══════════════════════════════════ -->
+
+  <!-- CloudFront (frontend CDN) -->
+  <g class="np">
+    <rect x="195" y="80" width="155" height="50" rx="8"/>
+    <text class="ttl" x="272" y="96" text-anchor="middle" dominant-baseline="central">CloudFront</text>
+    <text class="sub" x="272" y="114" text-anchor="middle" dominant-baseline="central">frontend CDN</text>
+  </g>
+
+  <!-- S3 (React build bucket) -->
+  <g class="nt">
+    <rect x="420" y="80" width="155" height="50" rx="8"/>
+    <text class="ttl" x="497" y="96" text-anchor="middle" dominant-baseline="central">S3</text>
+    <text class="sub" x="497" y="114" text-anchor="middle" dominant-baseline="central">React build bucket</text>
+  </g>
+
+  <!-- CloudFront ↔ S3 frontend -->
+  <line class="ad" x1="350" y1="100" x2="418" y2="100" marker-end="url(#arrow)"/>
+  <path class="ad" d="M420,112 Q390,130 352,112" marker-end="url(#arrow)"/>
+  <text class="lbl" x="383" y="142" text-anchor="middle">HTML / JS / CSS</text>
+
+  <!-- ═══════════════════════════════════
+       BROWSER  (y=278)
+  ═══════════════════════════════════ -->
+
+  <g class="ng">
+    <rect x="30" y="278" width="110" height="50" rx="8"/>
+    <text class="ttl" x="85" y="294" text-anchor="middle" dominant-baseline="central">Browser</text>
+    <text class="sub" x="85" y="312" text-anchor="middle" dominant-baseline="central">client / user</text>
+  </g>
+
+  <!-- Browser → CloudFront (fetch app, dashed) -->
+  <path class="ad" d="M112,280 Q165,212 210,132" marker-end="url(#arrow)"/>
+  <text class="lbl" x="134" y="214" text-anchor="end">fetch app</text>
+
+  <!-- Browser → API Gateway (API calls, solid) -->
+  <path class="a" d="M126,300 Q164,338 193,368" marker-end="url(#arrow)"/>
+  <text class="lbl" x="122" y="343" text-anchor="end">API calls</text>
+
+  <!-- ═══════════════════════════════════
+       API LAYER  (y=358)
+  ═══════════════════════════════════ -->
+
+  <!-- API Gateway -->
+  <g class="np">
+    <rect x="195" y="358" width="155" height="50" rx="8"/>
+    <text class="ttl" x="272" y="374" text-anchor="middle" dominant-baseline="central">API Gateway</text>
+    <text class="sub" x="272" y="392" text-anchor="middle" dominant-baseline="central">REST API</text>
+  </g>
+
+  <!-- API Gateway → Lambda -->
+  <line class="a" x1="350" y1="383" x2="418" y2="383" marker-end="url(#arrow)"/>
+
+  <!-- Cognito -->
+  <g class="nc">
+    <rect x="195" y="464" width="155" height="50" rx="8"/>
+    <text class="ttl" x="272" y="480" text-anchor="middle" dominant-baseline="central">Cognito</text>
+    <text class="sub" x="272" y="498" text-anchor="middle" dominant-baseline="central">admin auth (POST/PUT)</text>
+  </g>
+
+  <!-- API Gateway → Cognito -->
+  <line class="a" x1="272" y1="408" x2="272" y2="462" marker-end="url(#arrow)"/>
+  <text class="lbl" x="288" y="438" text-anchor="start">verify JWT</text>
+
+  <!-- Lambda -->
+  <g class="na">
+    <rect x="420" y="358" width="120" height="50" rx="8"/>
+    <text class="ttl" x="480" y="374" text-anchor="middle" dominant-baseline="central">Lambda</text>
+    <text class="sub" x="480" y="392" text-anchor="middle" dominant-baseline="central">handler functions</text>
+  </g>
+
+  <!-- ═══════════════════════════════════
+       DATA  (right column)
+  ═══════════════════════════════════ -->
+
+  <!-- DynamoDB -->
+  <g class="nt">
+    <rect x="555" y="278" width="98" height="50" rx="8"/>
+    <text class="ttl" x="604" y="294" text-anchor="middle" dominant-baseline="central">DynamoDB</text>
+    <text class="sub" x="604" y="312" text-anchor="middle" dominant-baseline="central">6 tables</text>
+  </g>
+
+  <!-- S3 (media / images) -->
+  <g class="nt">
+    <rect x="555" y="408" width="98" height="50" rx="8"/>
+    <text class="ttl" x="604" y="424" text-anchor="middle" dominant-baseline="central">S3</text>
+    <text class="sub" x="604" y="442" text-anchor="middle" dominant-baseline="central">media / images</text>
+  </g>
+
+  <!-- Lambda → DynamoDB -->
+  <line class="a" x1="540" y1="368" x2="554" y2="308" marker-end="url(#arrow)"/>
+
+  <!-- Lambda → S3 media -->
+  <line class="a" x1="540" y1="398" x2="554" y2="422" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════════════════════
+       OBSERVABILITY  (y=464)
+  ═══════════════════════════════════ -->
+
+  <!-- CloudWatch -->
+  <g class="ng">
+    <rect x="420" y="464" width="105" height="50" rx="8"/>
+    <text class="ttl" x="472" y="480" text-anchor="middle" dominant-baseline="central">CloudWatch</text>
+    <text class="sub" x="472" y="498" text-anchor="middle" dominant-baseline="central">logs + alarms</text>
+  </g>
+
+  <!-- X-Ray -->
+  <g class="ng">
+    <rect x="534" y="464" width="104" height="50" rx="8"/>
+    <text class="ttl" x="586" y="480" text-anchor="middle" dominant-baseline="central">X-Ray</text>
+    <text class="sub" x="586" y="498" text-anchor="middle" dominant-baseline="central">distributed tracing</text>
+  </g>
+
+  <!-- Lambda → CloudWatch -->
+  <line class="a" x1="462" y1="408" x2="462" y2="462" marker-end="url(#arrow)"/>
+
+  <!-- Lambda → X-Ray (route between CloudWatch right and S3 media left) -->
+  <path class="a" d="M530,408 L530,460 L536,460 L536,462" marker-end="url(#arrow)"/>
+
+  <!-- ═══════════════════════════════════
+       CI/CD STRIP  (y=573)
+  ═══════════════════════════════════ -->
+
+  <!-- GitHub -->
+  <g class="ng">
+    <rect x="30" y="573" width="100" height="50" rx="8"/>
+    <text class="ttl" x="80" y="589" text-anchor="middle" dominant-baseline="central">GitHub</text>
+    <text class="sub" x="80" y="607" text-anchor="middle" dominant-baseline="central">source repo</text>
+  </g>
+
+  <!-- CodePipeline -->
+  <g class="nb">
+    <rect x="170" y="573" width="120" height="50" rx="8"/>
+    <text class="ttl" x="230" y="589" text-anchor="middle" dominant-baseline="central">CodePipeline</text>
+    <text class="sub" x="230" y="607" text-anchor="middle" dominant-baseline="central">orchestrator</text>
+  </g>
+
+  <!-- CodeBuild -->
+  <g class="nb">
+    <rect x="340" y="573" width="105" height="50" rx="8"/>
+    <text class="ttl" x="392" y="589" text-anchor="middle" dominant-baseline="central">CodeBuild</text>
+    <text class="sub" x="392" y="607" text-anchor="middle" dominant-baseline="central">build + test</text>
+  </g>
+
+  <!-- GitHub → CodePipeline -->
+  <line class="a" x1="130" y1="598" x2="168" y2="598" marker-end="url(#arrow)"/>
+
+  <!-- CodePipeline → CodeBuild -->
+  <line class="a" x1="290" y1="598" x2="338" y2="598" marker-end="url(#arrow)"/>
+
+  <!-- CodeBuild → Lambda (SAM / backend deploy, dotted) -->
+  <!-- Route: up from x=420 inside CodeBuild top, left at y=537, up to Lambda left edge -->
+  <path class="ac" d="M420,573 L420,537 L402,537 L402,383 L418,383" marker-end="url(#arrow)"/>
+  <text class="lbl" x="398" y="456" text-anchor="end">SAM deploy</text>
+
+  <!-- CodeBuild → S3 frontend (frontend deploy, dotted) -->
+  <!-- Route: up from x=360 inside CodeBuild top, left along y=533, up left margin, right to S3 frontend top -->
+  <path class="ac" d="M360,573 L360,533 L150,533 L150,78 L420,78 L420,80" marker-end="url(#arrow)"/>
+  <text class="lbl" x="253" y="526" text-anchor="middle">S3 sync + CF invalidation</text>
+
+</svg>
