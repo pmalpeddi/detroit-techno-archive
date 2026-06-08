@@ -1,5 +1,19 @@
 # Dev Log
 
+## 06/08/2026
+
+### Docs — Architecture Diagram Redraw
+- Redrawn architecture diagram as SVG replacing original `architecture.drawio.png`
+- Corrected several inaccuracies from the original:
+  - Split CloudFront role — now correctly shown as frontend CDN (not in front of API Gateway)
+  - Added `detroit-techno-archive-frontend` S3 bucket as a distinct node from the media/images bucket
+  - Added X-Ray for distributed tracing alongside CloudWatch
+  - Added frontend CI/CD deploy path — CodeBuild → S3 sync + CloudFront cache invalidation
+  - Split CodeBuild out as its own explicit node (was folded into CodePipeline)
+  - Fixed CodePipeline → SAM/CloudFormation → Lambda deploy chain (was an incorrect dotted line directly to Lambda)
+- Exported PNG from SVG for GitHub README rendering
+- Updated README to embed PNG with link to SVG source: `[![Architecture Diagram](docs/architecture.png)](docs/architecture.svg)`
+
 ## 06/01/2026
 
 ### Data — Wave 3 Seed
