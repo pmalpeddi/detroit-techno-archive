@@ -127,7 +127,6 @@ docs/         # Architecture diagrams
 
   [![Architecture Diagram](docs/architecture.png)](docs/architecture.svg)
 
-
 ---
 
 ## Local Development
