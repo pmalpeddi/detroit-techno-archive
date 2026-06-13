@@ -3,7 +3,9 @@
     "allow": [
       "Bash(aws dynamodb scan *)",
       "Bash(python *)",
-      "Bash(python3 *)"
+      "Bash(python3 *)",
+      "Bash(aws dynamodb get-item *)",
+      "Bash(aws dynamodb update-item *)"
     ]
   }
 }
