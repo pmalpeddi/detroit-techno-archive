@@ -2,6 +2,12 @@
 
 ## 06/13/2026
 
+### Bug Fix — Labels Page
+- Fixed blank screen crash on Labels page — `founder` field stored as string in DynamoDB but component was calling `.join()` on it expecting an array
+- Fixed incorrect field reference: `label.profile` → `label.description`
+- Added `.catch()` error handling to the labels fetch so network failures surface as a message instead of a silent hang
+- Rebuilt and redeployed to S3 + CloudFront manually
+
 ### Tooling — Claude Code Integration
 - Installed Claude Code CLI in WSL (`npm install -g @anthropic-ai/claude-code`)
 - Added `CLAUDE.md` to project root — gives Claude Code persistent context on stack, AWS profile, table names, API URL, and seeding conventions
