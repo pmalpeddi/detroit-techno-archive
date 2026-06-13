@@ -6,11 +6,13 @@ const API = 'https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod';
 function Labels() {
   const [labels, setLabels] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetch(`${API}/labels`)
       .then(r => r.json())
-      .then(data => { setLabels(data.sort((a, b) => a.founded - b.founded)); setLoading(false); });
+      .then(data => { setLabels(data.sort((a, b) => a.founded - b.founded)); setLoading(false); })
+      .catch(() => { setError('Failed to load labels.'); setLoading(false); });
   }, []);
 
   return (
@@ -25,6 +27,8 @@ function Labels() {
 
       {loading ? (
         <div className="loading">LOADING...</div>
+      ) : error ? (
+        <div className="loading">{error}</div>
       ) : (
         <div className="labels-list">
           {labels.map(label => (
@@ -32,8 +36,8 @@ function Labels() {
               <div className="label-year">{label.founded}</div>
               <div className="label-info">
                 <div className="label-name">{label.name}</div>
-                <div className="label-founder">Founded by {label.founder?.join(', ')}</div>
-                <div className="label-profile">{label.profile}</div>
+                <div className="label-founder">Founded by {label.founder}</div>
+                <div className="label-profile">{label.description}</div>
                 <div className="label-tags">
                   {label.genres?.slice(0, 3).map(g => <span className="tag" key={g}>{g}</span>)}
                 </div>
