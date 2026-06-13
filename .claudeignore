@@ -1,0 +1,19 @@
+# AWS credentials and environment
+.env
+.env.*
+*.pem
+*.key
+
+# AWS local config
+.aws/
+
+# Git
+.git/
+
+# Node
+node_modules/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
