@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(aws dynamodb scan *)",
+      "Bash(python *)",
+      "Bash(python3 *)"
+    ]
+  }
+}
