@@ -22,6 +22,7 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | Terraform | Infrastructure as Code for all non-serverless AWS resources |
 | React | Frontend web interface |
 | React Router | Client-side routing |
+| Claude Code | Agentic CLI used to streamline data seeding — scans live DynamoDB tables before each wave to prevent duplicate entries and generate historically accurate seed scripts |
 
 ---
 
@@ -84,9 +85,10 @@ docs/         # Architecture diagrams
 - Deployed via SAM CLI
 
 ### Phase 3 — Data Population ✅ (Ongoing)
-- Seeded 22 artists, 13 labels, 19 releases, 6 venues, 16 gear items, 1 event
+- Seeded 27 artists, 16 labels, 24 releases, 9 venues, 20 gear items, 2 events
 - Uploaded images to S3 across all entity folders
 - Validated data structure and API responses
+- Integrated Claude Code as agentic seeding workflow - automatically scans live DynamoDB tables before each wave to prevent duplicates and generate historically accurate entries.
 
 ### Phase 4 — Auth & Admin (In Progress)
 - Cognito User Pool deployed via SAM

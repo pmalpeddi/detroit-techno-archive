@@ -1,5 +1,57 @@
 # Dev Log
 
+## 06/13/2026
+
+### Tooling — Claude Code Integration
+- Installed Claude Code CLI in WSL (`npm install -g @anthropic-ai/claude-code`)
+- Added `CLAUDE.md` to project root — gives Claude Code persistent context on stack, AWS profile, table names, API URL, and seeding conventions
+- Added `.claudeignore` to exclude `.env`, credentials, and build artifacts from Claude Code's file access
+- Added Claude Code to README tech stack — agentic CLI used to streamline data seeding, scans live DynamoDB tables before each wave to prevent duplicate entries and generate historically accurate seed scripts
+
+### Data — Wave 4 Seed
+- Used Claude Code to scan all 6 DynamoDB tables before writing any scripts — prevented duplicate entries automatically
+- Added `scripts/seed_data_4.py` — 5 artists, 3 labels, 5 releases, 1 event, 3 venues, 4 gear items
+- Added `scripts/update_image_urls_4.py` — image URLs for all wave 4 entries
+- Uploaded images to S3 across artists/, labels/, releases/, venues/, events/, gear/ folders
+- Fixed `venue_elektricity` — corrected opened year to 2011, status to active, updated description
+- Archive now has 27 artists, 16 labels, 24 releases, 9 venues, 20 gear items, 2 events
+
+### New Artists
+- Kenny Larkin — second-wave Detroit producer, Azimuth (1994, Warp Records)
+- DJ Minx (Jennifer Witcher) — Detroit underground DJ, founder of Women on Wax Recordings
+- Omar S (Alex Omar Smith) — FXHE Records founder, raw Detroit house and techno
+- Dopplereffekt (Gerald Donald) — EBM-influenced project, Gerald Donald's post-Drexciya work
+- Terrence Dixon — minimal Detroit Techno, Population One imprint
+
+### New Labels
+- FXHE Records — Omar S's artist-owned Detroit imprint
+- Women on Wax — DJ Minx's label, dedicated to female and femme-identifying producers
+- Population One — Terrence Dixon's minimal techno imprint
+
+### New Releases
+- Carl Craig: Landcruising (1995, Planet E)
+- Model 500: Night Drive (Thru-Babylon) (1985, Metroplex)
+- Underground Resistance: Interstellar Fugitives (1998, UR)
+- Eddie Fowlkes: Goodbye Kiss (1986, Metroplex)
+- Omar S: Thank U 4 Letting Me Be Myself (2007, FXHE)
+
+### New Events
+- Detroit Electronic Music Festival 2000 — inaugural DEMF at Hart Plaza, ~1 million attendees, first public recognition of Detroit Techno's cultural significance at scale
+
+### New Venues
+- St. Andrews Hall — historic downtown Detroit concert hall and home of The Shelter
+- Bookies Club 870 — late 1970s punk/new wave club, cultural pre-history of Detroit Techno
+- Marble Bar — early 1980s alternative underground venue, formative for the generation that created Detroit Techno
+
+### New Gear
+- Roland Jupiter-8, Akai S950, Sequential Circuits Six-Trak, Roland MC-202 MicroComposer
+
+### Next Steps
+- Add POST/PUT admin endpoints protected by Cognito authorizer
+- Set up CI/CD pipeline via CodePipeline and CodeBuild
+- CloudWatch monitoring and alarms
+- Continue seeding data — more releases, more venues
+
 ## 06/08/2026
 
 ### Docs — Architecture Diagram Redraw
