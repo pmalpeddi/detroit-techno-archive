@@ -1,5 +1,25 @@
 # Dev Log
 
+## 06/18/2026
+
+### Data — Wave 5 Seed (Venues)
+- Added `scripts/seed_data_5.py` — 2 venues
+- Used Claude Code to scan the venues table before writing — confirmed neither entry existed yet
+- Uploaded images directly to S3 via AWS CLI (`aws s3 cp`) instead of the console — faster, scriptable, and consistent with the rest of the seeding workflow
+- Added `scripts/update_image_urls_5.py` — image URLs for both new venues
+- Source: [Spot Lite and UFO Bar to close in Detroit as owners move away from nightlife](https://www.metrotimes.com/food-drink/spot-lite-and-ufo-bar-to-close-in-detroit-as-owners-move-away-from-nightlife/) — Detroit Metro Times, June 2026
+- Archive now has 11 venues
+
+### New Venues
+- Spot Lite — Islandview hybrid space (bar, gallery, record store, coworking, dance floor) opened 2021 by Roula David and Jesse Cory; closing June 28, 2026 after a 5-year run
+- UFO Bar — Corktown venue, formerly UFO Factory, reopened under Roula David in 2024; closing June 30, 2026, to reopen under new ownership as Detroit Vinyl Bar
+
+### Next Steps
+- Add POST/PUT admin endpoints protected by Cognito authorizer
+- Set up CI/CD pipeline via CodePipeline and CodeBuild
+- CloudWatch monitoring and alarms
+- Continue seeding data — more artists, releases, venues
+
 ## 06/13/2026
 
 ### Bug Fix — Labels Page
