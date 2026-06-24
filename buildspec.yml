@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      python: 3.12
+      nodejs: 20
+    commands:
+      - pip install aws-sam-cli
+      - cd frontend && npm install && cd ..
+
+  build:
+    commands:
+      - sam build
+      - sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --profile "" 
+      - cd frontend && npm run build && cd ..
+
+  post_build:
+    commands:
+      - aws s3 sync frontend/build/ s3://detroit-techno-archive-frontend --delete
+      - aws cloudfront create-invalidation --distribution-id EMP03ACQED95W --paths "/*"
