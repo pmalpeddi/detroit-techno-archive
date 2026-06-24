@@ -18,4 +18,4 @@ phases:
   post_build:
     commands:
       - aws s3 sync frontend/build/ s3://detroit-techno-archive-frontend --delete
-      - aws cloudfront create-invalidation --distribution-id EMP03ACQED95W --paths "/*"
+      - aws cloudfront create-invalidation --distribution-id $CLOUDFRONT_DISTRIBUTION_ID --paths "/*"
