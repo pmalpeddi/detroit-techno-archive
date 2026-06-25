@@ -1,5 +1,44 @@
 # Dev Log
 
+## 06/24/2026
+
+### Phase 6 — CI/CD Setup (CodeBuild + CodePipeline)
+
+#### CodeBuild
+- Created `buildspec.yml` at project root defining install, build, and post_build phases
+  - Install: aws-sam-cli (pip), npm dependencies
+  - Build: `sam build` + `sam deploy`, `npm run build`
+  - Post-build: `aws s3 sync` to frontend bucket, CloudFront invalidation
+- Created CodeBuild project `detroit-techno-archive` via AWS console
+  - Source: GitHub via GitHub App connection
+  - Environment: Amazon Linux, standard runtime, 2 vCPUs / 4 GiB
+  - Service role: `codebuild-detroit-techno-archive-service-role` (auto-generated + custom inline policy)
+  - Buildspec: uses `buildspec.yml` from repo root
+  - CloudWatch logs enabled at `/aws/codebuild/detroit-techno-archive`
+  - Environment variable: `CLOUDFRONT_DISTRIBUTION_ID` (plaintext)
+- Resolved several build failures iteratively:
+  - Removed `profile = "techno-archive-dev"` from `samconfig.toml` — CodeBuild uses IAM role, not named profiles
+  - Added explicit flags to `sam deploy` command (`--stack-name`, `--region`, `--capabilities`, `--resolve-s3`, `--s3-prefix`)
+  - Expanded CodeBuild IAM role to include `aws-sam-cli-managed-default` CloudFormation stack
+- **First successful build confirmed**
+
+#### IAM Refactor
+- Replaced 10 attached managed policies on `techno-archive-dev` with a single customer managed policy `techno-archive-dev-policy` — scoped to project resources following least privilege principle
+- Added CodeBuild execution inline policy to `codebuild-detroit-techno-archive-service-role`
+
+#### GPG Commit Signing
+- Generated GPG key (RSA 4096) in WSL
+- Added public key to GitHub — verified commits now enabled
+- Configured git globally: `user.signingkey`, `commit.gpgsign`, `GPG_TTY`
+- Added `export GPG_TTY=$(tty)` to `~/.bashrc` for persistent passphrase prompting
+
+#### Next Steps
+- Complete CodePipeline setup (stopped mid-creation — needs `ec2:DescribeVpcs` permission added to `techno-archive-dev-policy`)
+- Add EC2 read-only statement to managed policy, resume pipeline creation
+- Test end-to-end: push to `main` → pipeline triggers → CodeBuild runs → deploy succeeds
+- Write DEVLOG entry for completed pipeline once live
+- Lock down `iam:*` in `techno-archive-dev-policy` back to specific actions once setup is complete
+
 ## 06/18/2026
 
 ### Data — Wave 5 Seed (Venues)
