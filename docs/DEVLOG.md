@@ -1,5 +1,26 @@
 # Dev Log
 
+## 06/25/2026
+
+#### CodePipeline
+- Created CodePipeline `detroit-techno-archive` via AWS console
+  - Source: GitHub (via GitHub App), `pmalpeddi/detroit-techno-archive`, branch `main`
+  - Build: AWS CodeBuild project `detroit-techno-archive`
+  - Deploy and test stages skipped — deployment handled in buildspec post_build phase
+  - Execution mode: Queued
+  - DetectChanges enabled — pipeline triggers automatically on every push to `main`
+- Added `ec2:DescribeVpcs`, `ec2:DescribeSubnets`, `ec2:DescribeSecurityGroups` to `techno-archive-dev-policy` to unblock pipeline creation
+- First automated pipeline run succeeded on creation
+
+#### Phase 6 Status: Complete
+End-to-end CI/CD is live. Pushing to `main` automatically triggers source pull, SAM backend deploy, React frontend build, S3 sync, and CloudFront invalidation — no manual steps required.
+
+#### Next Steps
+- Phase 7: Observability — CloudWatch alarms and AWS X-Ray tracing
+- Complete Cognito-protected POST/PUT admin endpoints
+- Lock down `iam:*` in `techno-archive-dev-policy` back to specific actions now that setup is complete
+- Continue seed data waves
+
 ## 06/24/2026
 
 ### Phase 6 — CI/CD Setup (CodeBuild + CodePipeline)
