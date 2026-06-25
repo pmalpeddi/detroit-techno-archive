@@ -16,10 +16,10 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | AWS Cognito | Admin authentication for protected endpoints |
 | AWS CodePipeline | CI/CD pipeline orchestration |
 | AWS CodeBuild | Builds and tests application code |
-| AWS CloudWatch | Monitoring, dashboards, and alerting |
-| AWS X-Ray | Distributed tracing across Lambda and API Gateway |
+| AWS CloudWatch | Monitoring, dashboards, and alerting (Planned)|
+| AWS X-Ray | Distributed tracing across Lambda and API Gateway (Planned) |
 | AWS SAM | Serverless application framework for Lambda and API Gateway |
-| Terraform | Infrastructure as Code for all non-serverless AWS resources |
+| Terraform | Infrastructure as Code for all non-serverless AWS resources (Planned) |
 | React | Frontend web interface |
 | React Router | Client-side routing |
 | Claude Code | Agentic CLI used to streamline data seeding — scans live DynamoDB tables before each wave to prevent duplicate entries and generate historically accurate seed scripts |
@@ -71,31 +71,31 @@ docs/         # Architecture diagrams
 
 ## Roadmap
 
-### Phase 1 — Planning ✅
+### Phase 1 — Planning (Complete)
 - Defined data model for all entities
 - Created GitHub repo
 - Set up AWS environment with IAM roles
 - Installed and configured SAM CLI
 - Drew architecture diagram
 
-### Phase 2 — Backend Foundation ✅
+### Phase 2 — Backend Foundation (Complete)
 - Created all DynamoDB tables via SAM
 - Wrote Lambda functions for GET endpoints across all 6 entities
 - Exposed 12 endpoints through API Gateway
 - Deployed via SAM CLI
 
-### Phase 3 — Data Population ✅ (Ongoing)
-- Seeded 27 artists, 16 labels, 24 releases, 9 venues, 20 gear items, 2 events
+### Phase 3 — Data Population (Ongoing)
+- Seeded 27 artists, 16 labels, 24 releases, 11 venues, 20 gear items, 2 events
 - Uploaded images to S3 across all entity folders
 - Validated data structure and API responses
-- Integrated Claude Code as agentic seeding workflow - automatically scans live DynamoDB tables before each wave to prevent duplicates and generate historically accurate entries.
+- Integrated Claude Code as agentic seeding workflow that automatically scans live DynamoDB tables before each wave to prevent duplicates and generate historically accurate entries.
 
 ### Phase 4 — Auth & Admin (In Progress)
 - Cognito User Pool deployed via SAM
 - Admin-only user pool — no public signups
 - POST/PUT endpoints for admin data entry — in progress
 
-### Phase 5 — Frontend (In Progress)
+### Phase 5 — Frontend (Ongoing)
 - React app with React Router
 - Artists, Labels, Gear, Venues, Events pages
 - Artist detail pages with release cross-referencing
@@ -103,12 +103,12 @@ docs/         # Architecture diagrams
 - Deployed to S3 + CloudFront — https://d24pywqdzwrvb1.cloudfront.net
 - UI polish and refinement ongoing
 
-### Phase 6 — CI/CD Pipeline
-- CodePipeline triggered by GitHub push
-- CodeBuild runs tests and builds React frontend
-- SAM deploys updated Lambda functions
-- S3 sync deploys frontend build
-- CloudFront cache invalidation post-deploy
+### Phase 6 — CI/CD Pipeline (Complete)
+- CodePipeline triggered automatically on push to main
+- CodeBuild runs sam build + sam deploy for backend
+- React frontend built and synced to S3 via buildspec post_build
+- CloudFront cache invalidation on every deploy
+- GPG commit signing configured for verified commits
 
 ### Phase 7 — Observability
 - CloudWatch Dashboards for API and Lambda metrics
@@ -138,7 +138,6 @@ docs/         # Architecture diagrams
 - SAM CLI installed
 - Docker running
 - Node.js installed
-- Terraform installed
 
 ### Run API locally
 ```bash
