@@ -20,6 +20,11 @@ Globals:
         DYNAMODB_TABLE_GEAR: !Ref GearTable
     LoggingConfig:
       LogFormat: JSON
+  Api:
+    Auth:
+      Authorizers:
+        CognitoAuthorizer:
+          UserPoolArn: !GetAtt AdminUserPool.Arn
 
 Resources:
 
@@ -133,7 +138,7 @@ Resources:
       AccessTokenValidity: 24
       RefreshTokenValidity: 30
 
-  # ─── Lambda Functions ───────────────────────────────────────────
+  # ─── Lambda Functions — Artists ─────────────────────────────────
 
   GetArtistsFunction:
     Type: AWS::Serverless::Function
@@ -165,6 +170,42 @@ Resources:
             Path: /artists/{artist_id}
             Method: get
 
+  PostArtistFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/artists/
+      Handler: post_artist.lambda_handler
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref ArtistsTable
+      Events:
+        PostArtist:
+          Type: Api
+          Properties:
+            Path: /artists
+            Method: post
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  PutArtistFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/artists/
+      Handler: put_artist.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ArtistsTable
+      Events:
+        PutArtist:
+          Type: Api
+          Properties:
+            Path: /artists/{artist_id}
+            Method: put
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  # ─── Lambda Functions — Labels ──────────────────────────────────
+
   GetLabelsFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -194,6 +235,42 @@ Resources:
           Properties:
             Path: /labels/{label_id}
             Method: get
+
+  PostLabelFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/labels/
+      Handler: post_label.lambda_handler
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref LabelsTable
+      Events:
+        PostLabel:
+          Type: Api
+          Properties:
+            Path: /labels
+            Method: post
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  PutLabelFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/labels/
+      Handler: put_label.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref LabelsTable
+      Events:
+        PutLabel:
+          Type: Api
+          Properties:
+            Path: /labels/{label_id}
+            Method: put
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  # ─── Lambda Functions — Releases ────────────────────────────────
 
   GetReleasesFunction:
     Type: AWS::Serverless::Function
@@ -225,6 +302,42 @@ Resources:
             Path: /releases/{release_id}
             Method: get
 
+  PostReleaseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/releases/
+      Handler: post_release.lambda_handler
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref ReleasesTable
+      Events:
+        PostRelease:
+          Type: Api
+          Properties:
+            Path: /releases
+            Method: post
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  PutReleaseFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/releases/
+      Handler: put_release.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ReleasesTable
+      Events:
+        PutRelease:
+          Type: Api
+          Properties:
+            Path: /releases/{release_id}
+            Method: put
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  # ─── Lambda Functions — Venues ──────────────────────────────────
+
   GetVenuesFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -254,6 +367,42 @@ Resources:
           Properties:
             Path: /venues/{venue_id}
             Method: get
+
+  PostVenueFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/venues/
+      Handler: post_venue.lambda_handler
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref VenuesTable
+      Events:
+        PostVenue:
+          Type: Api
+          Properties:
+            Path: /venues
+            Method: post
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  PutVenueFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/venues/
+      Handler: put_venue.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref VenuesTable
+      Events:
+        PutVenue:
+          Type: Api
+          Properties:
+            Path: /venues/{venue_id}
+            Method: put
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  # ─── Lambda Functions — Events ──────────────────────────────────
 
   GetEventsFunction:
     Type: AWS::Serverless::Function
@@ -285,6 +434,42 @@ Resources:
             Path: /events/{event_id}
             Method: get
 
+  PostEventFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/events/
+      Handler: post_event.lambda_handler
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref EventsTable
+      Events:
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /events
+            Method: post
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  PutEventFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/events/
+      Handler: put_event.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref EventsTable
+      Events:
+        PutEvent:
+          Type: Api
+          Properties:
+            Path: /events/{event_id}
+            Method: put
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  # ─── Lambda Functions — Gear ────────────────────────────────────
+
   GetGearListFunction:
     Type: AWS::Serverless::Function
     Properties:
@@ -314,6 +499,40 @@ Resources:
           Properties:
             Path: /gear/{gear_id}
             Method: get
+
+  PostGearFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/gear/
+      Handler: post_gear.lambda_handler
+      Policies:
+        - DynamoDBWritePolicy:
+            TableName: !Ref GearTable
+      Events:
+        PostGear:
+          Type: Api
+          Properties:
+            Path: /gear
+            Method: post
+            Auth:
+              Authorizer: CognitoAuthorizer
+
+  PutGearFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: functions/gear/
+      Handler: put_gear.lambda_handler
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref GearTable
+      Events:
+        PutGear:
+          Type: Api
+          Properties:
+            Path: /gear/{gear_id}
+            Method: put
+            Auth:
+              Authorizer: CognitoAuthorizer
 
 Outputs:
   ArtistsApi:
