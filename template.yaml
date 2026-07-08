@@ -176,7 +176,7 @@ Resources:
       CodeUri: functions/artists/
       Handler: post_artist.lambda_handler
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBCrudPolicy:
             TableName: !Ref ArtistsTable
       Events:
         PostArtist:
@@ -242,7 +242,7 @@ Resources:
       CodeUri: functions/labels/
       Handler: post_label.lambda_handler
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBCrudPolicy:
             TableName: !Ref LabelsTable
       Events:
         PostLabel:
@@ -308,7 +308,7 @@ Resources:
       CodeUri: functions/releases/
       Handler: post_release.lambda_handler
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBCrudPolicy:
             TableName: !Ref ReleasesTable
       Events:
         PostRelease:
@@ -374,7 +374,7 @@ Resources:
       CodeUri: functions/venues/
       Handler: post_venue.lambda_handler
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBCrudPolicy:
             TableName: !Ref VenuesTable
       Events:
         PostVenue:
@@ -440,7 +440,7 @@ Resources:
       CodeUri: functions/events/
       Handler: post_event.lambda_handler
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBCrudPolicy:
             TableName: !Ref EventsTable
       Events:
         PostEvent:
@@ -506,7 +506,7 @@ Resources:
       CodeUri: functions/gear/
       Handler: post_gear.lambda_handler
       Policies:
-        - DynamoDBWritePolicy:
+        - DynamoDBCrudPolicy:
             TableName: !Ref GearTable
       Events:
         PostGear:
