@@ -1,5 +1,35 @@
 # Dev Log
 
+## 07/07/2026
+
+### Admin Write API — POST/PUT Endpoints (Cognito-protected)
+
+- Added Cognito authorizer to API Gateway via `Globals.Api.Auth.Authorizers` in template.yaml
+- Added POST and PUT Lambda functions for all 6 entities: artists, labels, releases, venues, events, gear (12 new functions total)
+- Each POST validates required fields, auto-generates entity ID via slugified name (or artist+title for releases), checks for existing ID conflicts, writes to DynamoDB
+- Each PUT checks the item exists, builds a dynamic UpdateExpression from only the fields provided, returns the updated item
+- Existing GET endpoints unaffected — no DefaultAuthorizer set, so only POST/PUT routes require a valid Cognito token
+
+#### Deployment issues resolved
+- `codebuild-detroit-techno-archive-service-role` initially lacked `cognito-idp:DescribeUserPool`, needed for API Gateway to resolve the Cognito authorizer's User Pool ARN — first deploy failed and triggered an automatic rollback
+- Rollback itself failed on missing `iam:DeleteRolePolicy` — CodeBuild's role couldn't clean up the IAM roles SAM had already created for the new functions, leaving the stack in `UPDATE_ROLLBACK_FAILED`
+- Patched CodeBuild's role with a broader IAM management policy (create/delete/get/put role policy, attach/detach, pass role, tag role); resolved with `continue-update-rollback`
+- Second deploy attempt failed differently — missing `iam:GetRolePolicy`, needed for CloudFormation to resolve each function's auto-generated role ARN — expanded the policy again
+- Third deploy succeeded: all 12 functions + roles + Cognito authorizer created clean
+- POST handlers initially used `DynamoDBWritePolicy`, which doesn't include `GetItem` — broke the duplicate-ID check on every POST. Switched to `DynamoDBCrudPolicy` to match the PUT handlers, redeployed, confirmed working
+
+#### Verified via Postman/curl
+- POST with valid Cognito token → 201, creates item correctly
+- POST without token → 401, confirms authorizer is enforcing
+- GET → still public, unauthenticated, unaffected
+- PUT with valid token → 200, updates correctly
+- Test artist created and cleaned up after verification
+
+### Next Steps
+- Continue Phase 7: CloudWatch alarms and X-Ray tracing
+- Lock down `iam:*` in `techno-archive-dev-policy` — still open from 06/25
+- Consider whether the new IAM permissions added to CodeBuild's role should also be scoped down now that the roles exist (currently `Resource: "*"` on IAM actions)
+
 ## 06/25/2026
 
 #### CodePipeline
