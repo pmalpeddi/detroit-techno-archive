@@ -1,5 +1,34 @@
 # Dev Log
 
+## 07/08/2026
+
+## 07/08/2026
+
+### Wave 6 Images — Wikimedia Commons Sourcing
+
+- Built `scripts/check_commons_images.py` — queries Wikimedia Commons' search
+  API per artist name before any manual image searching, using a proper
+  User-Agent header per Commons API etiquette requirements
+- Streamlines sourcing by checking licensing-cleared availability first,
+  narrowing "8 unknowns" down to "4 confirmed candidates + 4 needing manual
+  sourcing" in one pass rather than browsing image search per artist
+- Verified subject identity and license manually per candidate before use
+  (Commons search matches keywords, not identity — confirmed each file page
+  was actually the correct person)
+- Downloaded and uploaded 4 confirmed images: Moodymann, Theo Parrish,
+  DJ Godfather, DJ Assault — updated image_url via targeted DynamoDB update
+  (not the full update_image_urls_6.py, since labels/releases/remaining
+  artists don't have images yet)
+- Verified via live API call — image_url populated and correct
+
+### Next Steps
+- Source remaining Wave 6 images: Rick Wilhite, Marcellus Pittman, Kai Alcé,
+  Delano Smith (nothing usable on Commons — needs label sites/Discogs/manual)
+- Source 6 label images and 5 release/album cover images for Wave 6
+- Frontend design pass — explore fresh aesthetic direction (Phase 5 ongoing)
+- Continue Phase 7: CloudWatch alarms and X-Ray tracing
+- Lock down iam:* in techno-archive-dev-policy — still open from 06/25
+
 ## 07/07/2026
 
 ### Admin Write API — POST/PUT Endpoints (Cognito-protected)
