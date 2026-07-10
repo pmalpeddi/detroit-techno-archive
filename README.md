@@ -23,6 +23,7 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | React | Frontend web interface |
 | React Router | Client-side routing |
 | Claude Code | Agentic CLI used to streamline data seeding — scans live DynamoDB tables before each wave to prevent duplicate entries and generate historically accurate seed scripts |
+| Discogs / MusicBrainz APIs | External data sources for image sourcing and verification |
 
 ---
 
@@ -30,20 +31,32 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 
 Base URL: `https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod`
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | /artists | List all artists |
-| GET | /artists/{artist_id} | Get artist by ID |
-| GET | /labels | List all labels |
-| GET | /labels/{label_id} | Get label by ID |
-| GET | /releases | List all releases |
-| GET | /releases/{release_id} | Get release by ID |
-| GET | /venues | List all venues |
-| GET | /venues/{venue_id} | Get venue by ID |
-| GET | /events | List all events |
-| GET | /events/{event_id} | Get event by ID |
-| GET | /gear | List all gear |
-| GET | /gear/{gear_id} | Get gear by ID |
+| Method | Endpoint | Description | Auth |
+|---|---|---|---|
+| GET | /artists | List all artists | Public |
+| GET | /artists/{artist_id} | Get artist by ID | Public |
+| POST | /artists | Create artist | Cognito |
+| PUT | /artists/{artist_id} | Update artist | Cognito |
+| GET | /labels | List all labels | Public |
+| GET | /labels/{label_id} | Get label by ID | Public |
+| POST | /labels | Create label | Cognito |
+| PUT | /labels/{label_id} | Update label | Cognito |
+| GET | /releases | List all releases | Public |
+| GET | /releases/{release_id} | Get release by ID | Public |
+| POST | /releases | Create release | Cognito |
+| PUT | /releases/{release_id} | Update release | Cognito |
+| GET | /venues | List all venues | Public |
+| GET | /venues/{venue_id} | Get venue by ID | Public |
+| POST | /venues | Create venue | Cognito |
+| PUT | /venues/{venue_id} | Update venue | Cognito |
+| GET | /events | List all events | Public |
+| GET | /events/{event_id} | Get event by ID | Public |
+| POST | /events | Create event | Cognito |
+| PUT | /events/{event_id} | Update event | Cognito |
+| GET | /gear | List all gear | Public |
+| GET | /gear/{gear_id} | Get gear by ID | Public |
+| POST | /gear | Create gear | Cognito |
+| PUT | /gear/{gear_id} | Update gear | Cognito |
 
 ---
 
@@ -89,11 +102,13 @@ docs/         # Architecture diagrams
 - Uploaded images to S3 across all entity folders
 - Validated data structure and API responses
 - Integrated Claude Code as agentic seeding workflow that automatically scans live DynamoDB tables before each wave to prevent duplicates and generate historically accurate entries.
+- Built multi-source image lookup tooling (Wikimedia Commons, Discogs, MusicBrainz/Cover Art Archive) to streamline sourcing licensing-cleared images before manual search
 
-### Phase 4 — Auth & Admin (In Progress)
+### Phase 4 — Auth & Admin (Complete)
 - Cognito User Pool deployed via SAM
 - Admin-only user pool — no public signups
-- POST/PUT endpoints for admin data entry — in progress
+- Cognito authorizer added to API Gateway, scoped to write routes only (GET endpoints remain public)
+- POST/PUT endpoints live for all 6 entities — full admin CRUD via authenticated API calls
 
 ### Phase 5 — Frontend (Ongoing)
 - React app with React Router
