@@ -1,6 +1,45 @@
 # Dev Log
 
-## 07/08/2026
+## 07/09/2026 - 07/10/2026
+
+## 07/10/2026
+
+### Wave 6 Seed Data — Detroit Deep House & Ghettotech
+
+- Directed Claude Code to seed Wave 6: 8 artists (Moodymann, Theo Parrish, Rick Wilhite, Marcellus Pittman, Kai Alcé, Delano Smith, DJ Godfather, DJ Assault), 6 labels (Mahogani Music, Sound Signature, Unirhythm, NDATL Muzik, Databass Records, Electrofunk Records), and releases
+- Caught a fabricated release ("Crunk in the Trunk Vol. 1," attributed to DJ Godfather, 1997) that could not be verified against any real source — removed from DynamoDB, seed_data_6.py, and update_image_urls_6.py after confirmation
+- Archive now has 35 artists, 22 labels, 29 releases, 11 venues, 20 gear items, 2 events
+
+### Image Sourcing Tooling
+
+- Built scripts/check_image_sources.py — queries Wikimedia Commons, Discogs, and MusicBrainz/Cover Art Archive per artist, label, or release before manual image searching
+- Refactored from a hardcoded artist list into a CLI tool accepting names as arguments, reusable for future waves
+- Commons search proved fuzzy (returned unrelated archival matches for less-documented names); Discogs proved far more reliable for Detroit deep house/ghettotech figures, returning verified profile images for 10/10 artists and labels checked
+- MusicBrainz/Cover Art Archive found none of the 5 target release covers; Discogs release search found 4/5
+- Added Discogs API token as an environment variable rather than hardcoding it in the script, following the same pattern as excluding samconfig.toml from git for credential safety
+- Sourced and uploaded 14 of 19 possible Wave 6 images (8 artists, 6 labels, 4 of 5 releases) — one release (DJ Assault, "Jefferson Ave. & 7 Mile") has no confirmed source yet
+- One-off batch download script kept in new dev-scripts/ directory — gitignored, visible to Claude Code locally but never pushed publicly, to avoid cluttering the repo with disposable per-wave scripts
+
+### Bugfix — Decimal Serialization on GET Endpoints
+
+- Found get_label.py threw "Object of type Decimal is not JSON serializable" on single-item fetch — the 05/09 DecimalEncoder fix had only been applied to list endpoints, not singular by-ID endpoints
+- Audited all six entities: get_artist.py, get_artists.py, get_event.py, get_gear_item.py, get_release.py, and get_venue.py were all missing the encoder
+- Added DecimalEncoder consistently across all 6 files, verified via py_compile, deployed via CodePipeline
+
+### Docs
+- Updated README: added POST/PUT rows to API Endpoints table with Auth column, marked Phase 4 complete, updated Phase 3 seed counts, added Discogs/MusicBrainz to Tech Stack
+
+### Next Steps
+- Data QA pass across all artists — some artists are missing release
+  cross-references on their detail pages despite releases existing in the
+  table; audit match logic (name/aliases_used/associated_acts) against
+  actual seeded data
+- Source remaining image: DJ Assault — Jefferson Ave. & 7 Mile
+- Frontend tidy-up — review each artist page for correct images and
+  complete release listings before further design work
+- Frontend design pass — explore fresh aesthetic direction (Phase 5 ongoing)
+- Continue Phase 7: CloudWatch alarms and X-Ray tracing
+- Lock down iam:* in techno-archive-dev-policy — still open from 06/25
 
 ## 07/08/2026
 
