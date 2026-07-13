@@ -1,5 +1,50 @@
 # Dev Log
 
+## 07/13/2026
+
+### Frontend Redesign — In Progress via Claude Design
+
+- Linked Claude Design to the repo, scoped to frontend/src only
+- Wrote a detailed design-system prompt from actual current CSS values
+  (exact hex codes, fonts, layout patterns, explicit exclusions) rather than
+  vague aesthetic direction — preserves "acid techno minimal" identity
+  instead of letting the tool reinterpret it
+- Key decisions made before generation:
+  - Used Opus 4.8 at high effort for this pass specifically — judged the
+    task as precision-critical (holding many exact constraints
+    simultaneously) rather than routine, worth the extra cost for the one
+    pass that sets the pattern for the rest of the site
+  - Rejected the tool's initial plan to pare back #D4FF00 usage to
+    "signal-only" — decided the current accent density is core to the
+    site's identity, not decorative excess; only conflicting/adjacent
+    accent usage should be de-duplicated
+  - Considered a second accent color (Movement Detroit orange) for
+    event-specific signaling — deferred for now to evaluate one variable
+    (responsive + spacing system) before introducing a second one
+- Confirmed scope stays CSS-only — no component/JS changes needed since
+  class names and structure are preserved; only new @media blocks and
+  property values change
+- Established shared system: 4px-based spacing scale, three breakpoints
+  (767px mobile, 1023px tablet, 1440px desktop), unified type ramp
+  (Bebas Neue 28/40/64/96, body 13px, micro-labels 9px)
+- 5 of 10 CSS files completed in-session: index.css, App.css (removed dead
+  CRA boilerplate — confirmed unreferenced before deletion), Navbar.css,
+  Home.css (merged a duplicate .hero block), Artists.css
+- Nothing applied to the actual repo yet — work is staged in Claude Design,
+  pending completion of remaining files and visual preview review
+
+### Next Steps
+- Resume Claude Design session: complete ArtistDetail.css, Labels.css,
+  Venues.css, Events.css, Gear.css with same responsive treatment
+- Review visual preview (with viewport toggle) before applying anything to
+  the actual repo
+- Verify at 375px/768px/1440px specifically — this is genuinely new
+  responsive behavior, not an adjustment, since the site had zero @media
+  queries before this
+- Source remaining image: DJ Assault — Jefferson Ave. & 7 Mile
+- Continue Phase 7: CloudWatch alarms and X-Ray tracing
+- Lock down iam:* in techno-archive-dev-policy — still open from 06/25
+
 ## 07/09/2026 - 07/10/2026
 
 ### Wave 6 Seed Data — Detroit Deep House & Ghettotech
