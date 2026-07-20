@@ -1,5 +1,42 @@
 # Dev Log
 
+## 07/20/2026
+
+### IAM Lockdown - `techno-archive-dev-policy`
+
+- Closed out the `iam:*` wildcard left open since 06/25
+- Confirmed via `codebuild:batch-get-projects` and `codepipeline:get-pipeline` that CodeBuild and CodePipeline each run under their own dedicated service roles (`codebuild-detroit-techno-archive-service-role` and `AWSCodePipelineServiceRole-us-east-1-detroit-techno-archive`) - `techno-archive-dev` is only used for local `sam deploy`, so its IAM footprint is limited to managing the per-function execution roles SAM creates
+- Replaced `iam:*` / `Resource: "*"` with a scoped statement: `CreateRole`, `DeleteRole`, `GetRole`, `TagRole`, `UntagRole`, `PutRolePolicy`, `DeleteRolePolicy`, `GetRolePolicy`, `AttachRolePolicy`, `DetachRolePolicy`, `ListRolePolicies`, `ListAttachedRolePolicies`, `PassRole` - restricted to `role/detroit-techno-archive-*`
+- Edited directly in the IAM console's policy editor rather than via CLI versioning - console's visual summary confirmed the new IAM statement resolves to `RoleName: detroit-techno-archive-*` with the intended access levels
+- Noted in passing: the existing `APIGateway` statement (`apigateway:*` on `arn:aws:apigateway:us-east-1::*`) resolves to zero actual permissions per the console's policy summary - malformed resource ARN, pre-existing and unrelated to today's change, flagged for a future cleanup pass
+
+### Least Privilege in Practice
+
+- This closes the last broad wildcard grant in `techno-archive-dev-policy` - every other statement in the policy (DynamoDB, S3, CloudFront, Lambda, Cognito, CloudFormation) was already scoped to specific resource ARNs or name patterns; IAM was the outlier
+- Derived the scoped action list from actual usage rather than guessing broadly - traced what SAM/CloudFormation genuinely needs during `sam deploy` (creating and managing per-function execution roles) instead of copying a generic "IAM admin" policy
+- Verified real separation of concerns before scoping: confirmed CodeBuild and CodePipeline never assume `techno-archive-dev`'s credentials, so tightening this user's policy carries zero risk of breaking the pipeline - the two identities were already isolated, this just made the boundary explicit in the policy itself
+- `iam:PassRole` scoped to `role/detroit-techno-archive-*` specifically, since unscoped PassRole is one of the more common privilege-escalation footguns in IAM policies - a user with unrestricted PassRole can hand off any role in the account to a service, effectively inheriting that role's permissions
+- Treated the changeset preview step (`confirm_changeset = true`) as a deliberate safety net rather than a formality - it caught a stale build cache before anything deployed, which is the same "verify before applying" instinct behind reviewing IAM changes in the console's policy summary before saving
+
+### Near-Miss — Stale SAM Build Cache
+
+- Ran `sam deploy` to verify the IAM change didn't break anything; changeset came back proposing to delete all 12 POST/PUT Lambda functions, their roles, and permissions across every entity
+- Traced the cause: `samconfig.toml` has `cached = true` under `[default.build.parameters]`, and `.aws-sam/build/template.yaml` was stale - built before the Cognito-protected POST/PUT endpoints existed - so `sam deploy` was diffing an outdated build artifact against the live stack instead of the current `template.yaml`
+- Confirmed via `grep -c "PostArtistFunction:"` returning `1` in the root `template.yaml` but `0` in the cached build template
+- Declined the changeset, ran `sam build` fresh, then `sam deploy` again - result: "No changes to deploy. Stack is up to date," confirming the live stack matched source all along and nothing was ever actually at risk
+- Also confirmed via `describe-stacks` that only one live stack exists (`detroit-techno-archive`, matching the CloudFront/API Gateway outputs in use) - ruled out a duplicate-stack explanation before finding the real cause
+
+### Decisions Made
+- Kept the scoped IAM policy rather than reverting to `iam:*` under pressure - the near-miss was a build cache issue, not a permissions issue, and the changeset preview step did its job by surfacing the problem before anything was deployed
+- Deferred Phase 7 (CloudWatch alarms, X-Ray tracing) to tomorrow rather than rushing it after the cache detour ate into today's session
+
+### Next Steps
+- Phase 7: CloudWatch alarms (Lambda errors/throttles, API Gateway 5xx/latency) and X-Ray active tracing
+- Always run `sam build` (not relying on cache) before deploying after any gap in active development - this near-miss is the reason why
+- Resume Claude Design session: complete ArtistDetail.css, Labels.css, Venues.css, Events.css, Gear.css
+- Source remaining image: DJ Assault — Jefferson Ave. & 7 Mile
+- Revisit the malformed `APIGateway` resource ARN in `techno-archive-dev-policy`
+
 ## 07/13/2026
 
 ### Frontend Redesign — In Progress via Claude Design
