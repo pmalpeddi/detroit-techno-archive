@@ -98,7 +98,7 @@ docs/         # Architecture diagrams
 - Deployed via SAM CLI
 
 ### Phase 3 — Data Population (Ongoing)
-- Seeded 27 artists, 16 labels, 24 releases, 11 venues, 20 gear items, 2 events
+- Seeded 35 artists, 22 labels, 29 releases, 11 venues, 20 gear items, 2 events
 - Uploaded images to S3 across all entity folders
 - Validated data structure and API responses
 - Integrated Claude Code as agentic seeding workflow that automatically scans live DynamoDB tables before each wave to prevent duplicates and generate historically accurate entries.
