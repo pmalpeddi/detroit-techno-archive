@@ -133,7 +133,6 @@ docs/         # Architecture diagrams
 ### Phase 8 — Production Quality
 - Terraform for all infrastructure provisioning
 - Full README with architecture diagram
-- Blog post / LinkedIn article about the build
 - Submit to Detroit Techno community groups
 
 ---
