@@ -10,6 +10,7 @@ Globals:
     Runtime: python3.14
     Architectures:
       - x86_64
+    Tracing: Active
     Environment:
       Variables:
         DYNAMODB_TABLE_ARTISTS: !Ref ArtistsTable
@@ -21,6 +22,7 @@ Globals:
     LoggingConfig:
       LogFormat: JSON
   Api:
+    TracingEnabled: true
     Auth:
       Authorizers:
         CognitoAuthorizer:
