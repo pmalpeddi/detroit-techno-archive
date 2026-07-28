@@ -1,5 +1,52 @@
 # Dev Log
 
+## 07/23/2026 - 07/28/2026
+
+Phase 7: X-Ray Tracing + CloudWatch Alarms
+
+IAM Policy Extensions
+Added a scoped CloudWatch statement (logs:CreateLogGroup, logs:PutLogEvents,
+cloudwatch:PutMetricAlarm, cloudwatch:DescribeAlarms, etc.) to techno-archive-dev-policy,
+replacing the previously overlooked logs:*/cloudwatch:* wildcard - this predated the
+06/25-07/20 IAM lockdown work and had been missed in that pass
+Added a scoped SNS statement restricted to detroit-techno-archive-* topics,
+following the same least-privilege pattern as the rest of the policy
+
+X-Ray Tracing
+Added Tracing: Active to Globals.Function and TracingEnabled: true to Globals.Api
+in template.yaml - SAM automatically attaches AWSXRayDaemonWriteAccess to each
+function's execution role, no additional IAM changes needed on the deploy user
+Deployed and verified via the X-Ray console service map: Client -> API Gateway Stage
+-> Lambda Context -> Lambda Function segments confirmed across GET /artists and
+GET /labels requests
+
+CloudWatch Alarms
+Added an AlarmEmail parameter rather than hardcoding a notification address in
+template.yaml, since the repo is public - the email is supplied at deploy time via
+--parameter-overrides instead of being committed
+Added an SNS topic (detroit-techno-archive-alarms) with an email subscription for
+alarm notifications
+Scoped alarm coverage to the 12 write-path Lambda functions (Post/Put across
+artists, labels, releases, venues, events, gear) rather than all 24 - reasoned that
+GET endpoints are read-only and lower-stakes, while POST/PUT endpoints sit behind
+Cognito auth and mutate DynamoDB state, making failures there more actionable
+26 alarms total: Errors + Throttles per write function (24), plus API Gateway
+5xx and p90 latency (2) - all wired to the SNS topic with TreatMissingData: notBreaching
+API Gateway alarms briefly showed INSUFFICIENT_DATA immediately post-deploy (expected,
+since 5xx/latency metrics only publish on relevant events) - confirmed ApiGateway5xxAlarm
+settled into OK state after generating GET traffic against /artists and /labels
+
+Decisions Made
+Chose write-path-only alarm scope over full 24-function coverage - kept cost and
+alarm noise down while still covering the endpoints where failures actually matter
+Used CloudFormation parameters instead of literal values for the alarm email to
+avoid committing PII to a public repo
+
+Next Steps
+Phase 8: Terraform for IaC
+Continue data seeding (ongoing)
+React frontend UI polish (ongoing)
+
 ## 07/20/2026
 
 ### IAM Lockdown - `techno-archive-dev-policy`

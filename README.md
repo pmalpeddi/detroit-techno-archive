@@ -16,8 +16,9 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | AWS Cognito | Admin authentication for protected endpoints |
 | AWS CodePipeline | CI/CD pipeline orchestration |
 | AWS CodeBuild | Builds and tests application code |
-| AWS CloudWatch | Monitoring, dashboards, and alerting (Planned)|
-| AWS X-Ray | Distributed tracing across Lambda and API Gateway (Planned) |
+| AWS CloudWatch | Monitoring and alerting via alarms for Lambda errors/throttles and API Gateway 5xx/latency |
+| AWS X-Ray | Distributed tracing across Lambda and API Gateway |
+| AWS SNS | Email notifications for CloudWatch alarm triggers |
 | AWS SAM | Serverless application framework for Lambda and API Gateway |
 | Terraform | Infrastructure as Code for all non-serverless AWS resources (Planned) |
 | React | Frontend web interface |
@@ -125,7 +126,7 @@ docs/         # Architecture diagrams
 - CloudFront cache invalidation on every deploy
 - GPG commit signing configured for verified commits
 
-### Phase 7 — Observability
+### Phase 7 — Observability (Complete)
 - CloudWatch Dashboards for API and Lambda metrics
 - CloudWatch Alarms for error rate thresholds
 - AWS X-Ray distributed tracing across Lambda and API Gateway
