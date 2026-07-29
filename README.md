@@ -20,7 +20,6 @@ A public REST API and web interface archiving the history of Detroit Techno and 
 | AWS X-Ray | Distributed tracing across Lambda and API Gateway |
 | AWS SNS | Email notifications for CloudWatch alarm triggers |
 | AWS SAM | Serverless application framework for Lambda and API Gateway |
-| Terraform | Infrastructure as Code for all non-serverless AWS resources (Planned) |
 | React | Frontend web interface |
 | React Router | Client-side routing |
 | Claude Code | Agentic CLI used to streamline data seeding — scans live DynamoDB tables before each wave to prevent duplicate entries and generate historically accurate seed scripts |
@@ -66,7 +65,6 @@ Base URL: `https://cvlthm6c36.execute-api.us-east-1.amazonaws.com/Prod`
 functions/    # Lambda handlers
 frontend/     # React web interface
 scripts/      # Data seeding scripts
-infra/        # Terraform definitions
 docs/         # Architecture diagrams
 ```
 
@@ -127,12 +125,12 @@ docs/         # Architecture diagrams
 - GPG commit signing configured for verified commits
 
 ### Phase 7 — Observability (Complete)
-- CloudWatch Dashboards for API and Lambda metrics
-- CloudWatch Alarms for error rate thresholds
 - AWS X-Ray distributed tracing across Lambda and API Gateway
+- CloudWatch Alarms (Errors, Throttles) on all 12 write-path Lambda functions
+- CloudWatch Alarms for API Gateway 5xx errors and p90 latency
+- SNS topic with email notifications for alarm triggers
 
 ### Phase 8 — Production Quality
-- Terraform for all infrastructure provisioning
 - Full README with architecture diagram
 - Submit to Detroit Techno community groups
 

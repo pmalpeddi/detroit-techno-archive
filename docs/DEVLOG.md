@@ -1,51 +1,78 @@
 # Dev Log
 
+## 07/29/2026
+
+### Terraform Evaluation — Deferred to New Project
+
+- Installed Terraform v1.15.8 in WSL via the official HashiCorp apt repository
+- Set up initial `provider.tf` and `s3.tf` scaffolding to bring the existing S3 buckets (`detroit-techno-archive-frontend`, `detroit-techno-archive-media`) under Terraform management as a starting point for Phase 8
+
+#### Decision: Deferred
+- Walked through what Terraform would actually change for this project - it manages bucket/resource configuration (versioning, access policies, CORS, etc.), not object uploads or seeding workflows, which remain untouched either way
+- Concluded the practical benefit for a small, already-correctly-configured serverless stack was mostly demonstrative rather than solving an active pain point - the stronger skill signal (and better fit for Terraform) is a project architected around IaC and container orchestration from the start, rather than retrofitting it onto a finished SAM-managed stack
+- Decided to keep this project focused on shipping - continued data seeding and frontend polish - and start a separate Terraform + Kubernetes project where those tools are architecturally central rather than bolted on
+
+#### Next Steps
+- Phase 8 (revised): continue data seeding, finish remaining CSS files (ArtistDetail, Labels, Venues, Events, Gear)
+- New repo: scope out a Terraform + Kubernetes cloud project
+
+---
+
+### Data Integrity Issue Found — DJ Assault Release Records
+
+- While investigating the note about a missing image for "DJ Assault - Jefferson Ave. & 7 Mile," discovered the underlying release record itself is inaccurate, not just missing an image
+
+#### `Jefferson Ave. & 7 Mile` (`release_dj_assault_jefferson_ave_7_mile`)
+- Title doesn't match any real DJ Assault release - closest real title is "Jefferson Ave." (2001, Intuit-Solar, catalog ITU 1009)
+- Seeded tracklist (Straight Up Detroit Shit, Let Me See You Get Low, Pop That Coochie, Detroit Allstars) does not match any single real release cleanly - appears to be a blend of near-miss variants on real tracks scattered across DJ Assault's "Straight Up Detroit Sh*t" mix series (Vol. 1-5): "Let Me See You Get Low" closely echoes the real "Let Me See Ya" (Vol. 3), and "Pop That Coochie" closely echoes the real "Pop That Pussy" (Vol. 5) - "Straight Up Detroit Shit" itself is the mix series' title, not an actual track name on any volume
+- Label listed as Electrofunk Records - real "Jefferson Ave." release was on Intuit-Solar
+
+#### `Belle Isle Tech` (existing record)
+- Year listed as 1997 - real release is 2000
+- Label listed as Electrofunk Records - real release was on Mo Wax (UK, MWR115LP), part of the "Booty Wax" compilation series
+- Tracklist includes "Come On" and "Belle Isle Tech" as track titles - neither appears on the real 3xLP tracklist (real tracks include Terrortec, The Return Of Terrortec, U Can't See Me, Sex On The Beach, etc.)
+- Also flagged: existing cover image for this release is inappropriate for a public archive - needs replacing regardless of the tracklist fix
+
+#### Root Cause
+- DJ Assault's catalog is unusually dense and messy to seed accurately - the "Straight Up Detroit Sh*t" series alone spans at least 5 volumes, several with 90+ tracks, many credited to "Unknown Artist," and titles that vary slightly between reissues/pressings
+- Cross-referencing the seeded tracklist against the full discography (rather than just the two nearest-titled releases) shows the errors are near-miss paraphrasing of real tracks rather than invented content - consistent with the CLI-directed Claude Code seeding workflow generating plausible titles from partial/fuzzy source material rather than an exact tracklist for this specific artist
+- Scoped this investigation specifically to DJ Assault for now, based on manual verification against Discogs
+
+#### Decision: Deferred
+- This is real data-correction work (accurate tracklists, labels, catalog numbers, years) rather than a quick image swap, and this session was already long
+
+#### Next Steps
+- Correct Jefferson Ave. and Belle Isle Tech release records with accurate Discogs-sourced data
+- Source an appropriate cover image for Belle Isle Tech
+- Decide whether Straight Up Detroit Sh*t Vol. 1 and Vol. 2 should be added as their own release entries (not currently in the database at all)
+- Spot-check other artists from the same seeding wave for similar tracklist/metadata accuracy issues
+
 ## 07/23/2026 - 07/28/2026
 
-Phase 7: X-Ray Tracing + CloudWatch Alarms
+### Phase 7: X-Ray Tracing + CloudWatch Alarms
 
-IAM Policy Extensions
-Added a scoped CloudWatch statement (logs:CreateLogGroup, logs:PutLogEvents,
-cloudwatch:PutMetricAlarm, cloudwatch:DescribeAlarms, etc.) to techno-archive-dev-policy,
-replacing the previously overlooked logs:*/cloudwatch:* wildcard - this predated the
-06/25-07/20 IAM lockdown work and had been missed in that pass
-Added a scoped SNS statement restricted to detroit-techno-archive-* topics,
-following the same least-privilege pattern as the rest of the policy
+#### IAM Policy Extensions
+- Added a scoped CloudWatch statement (`logs:CreateLogGroup`, `logs:PutLogEvents`, `cloudwatch:PutMetricAlarm`, `cloudwatch:DescribeAlarms`, etc.) to `techno-archive-dev-policy`, replacing the previously overlooked `logs:*`/`cloudwatch:*` wildcard - this predated the 06/25-07/20 IAM lockdown work and had been missed in that pass
+- Added a scoped SNS statement restricted to `detroit-techno-archive-*` topics, following the same least-privilege pattern as the rest of the policy
 
-X-Ray Tracing
-Added Tracing: Active to Globals.Function and TracingEnabled: true to Globals.Api
-in template.yaml - SAM automatically attaches AWSXRayDaemonWriteAccess to each
-function's execution role, no additional IAM changes needed on the deploy user
-Deployed and verified via the X-Ray console service map: Client -> API Gateway Stage
--> Lambda Context -> Lambda Function segments confirmed across GET /artists and
-GET /labels requests
+#### X-Ray Tracing
+- Added `Tracing: Active` to `Globals.Function` and `TracingEnabled: true` to `Globals.Api` in `template.yaml` - SAM automatically attaches `AWSXRayDaemonWriteAccess` to each function's execution role, no additional IAM changes needed on the deploy user
+- Deployed and verified via the X-Ray console service map: Client -> API Gateway Stage -> Lambda Context -> Lambda Function segments confirmed across GET /artists and GET /labels requests
 
-CloudWatch Alarms
-Added an AlarmEmail parameter rather than hardcoding a notification address in
-template.yaml, since the repo is public - the email is supplied at deploy time via
---parameter-overrides instead of being committed
-Added an SNS topic (detroit-techno-archive-alarms) with an email subscription for
-alarm notifications
-Scoped alarm coverage to the 12 write-path Lambda functions (Post/Put across
-artists, labels, releases, venues, events, gear) rather than all 24 - reasoned that
-GET endpoints are read-only and lower-stakes, while POST/PUT endpoints sit behind
-Cognito auth and mutate DynamoDB state, making failures there more actionable
-26 alarms total: Errors + Throttles per write function (24), plus API Gateway
-5xx and p90 latency (2) - all wired to the SNS topic with TreatMissingData: notBreaching
-API Gateway alarms briefly showed INSUFFICIENT_DATA immediately post-deploy (expected,
-since 5xx/latency metrics only publish on relevant events) - confirmed ApiGateway5xxAlarm
-settled into OK state after generating GET traffic against /artists and /labels
+#### CloudWatch Alarms
+- Added an `AlarmEmail` parameter rather than hardcoding a notification address in `template.yaml`, since the repo is public - the email is supplied at deploy time via `--parameter-overrides` instead of being committed
+- Added an SNS topic (`detroit-techno-archive-alarms`) with an email subscription for alarm notifications
+- Scoped alarm coverage to the 12 write-path Lambda functions (Post/Put across artists, labels, releases, venues, events, gear) rather than all 24 - reasoned that GET endpoints are read-only and lower-stakes, while POST/PUT endpoints sit behind Cognito auth and mutate DynamoDB state, making failures there more actionable
+- 26 alarms total: Errors + Throttles per write function (24), plus API Gateway 5xx and p90 latency (2) - all wired to the SNS topic with `TreatMissingData: notBreaching`
+- API Gateway alarms briefly showed `INSUFFICIENT_DATA` immediately post-deploy (expected, since 5xx/latency metrics only publish on relevant events) - confirmed `ApiGateway5xxAlarm` settled into `OK` state after generating GET traffic against /artists and /labels
 
-Decisions Made
-Chose write-path-only alarm scope over full 24-function coverage - kept cost and
-alarm noise down while still covering the endpoints where failures actually matter
-Used CloudFormation parameters instead of literal values for the alarm email to
-avoid committing PII to a public repo
+#### Decisions Made
+- Chose write-path-only alarm scope over full 24-function coverage - kept cost and alarm noise down while still covering the endpoints where failures actually matter
+- Used CloudFormation parameters instead of literal values for the alarm email to avoid committing PII to a public repo
 
-Next Steps
-Phase 8: Terraform for IaC
-Continue data seeding (ongoing)
-React frontend UI polish (ongoing)
+#### Next Steps
+- Continue data seeding (ongoing)
+- React frontend UI polish (ongoing)
 
 ## 07/20/2026
 
