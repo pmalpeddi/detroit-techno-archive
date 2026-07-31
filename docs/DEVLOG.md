@@ -1,5 +1,39 @@
 # Dev Log
 
+## 07/31/2026
+
+### Release Data Accuracy Audit — Planned
+
+Following the DJ Assault findings from 07/29, decided to expand the correction
+effort beyond a single artist - manually verify and correct release records
+for all artists in the archive against Discogs, rather than trusting the
+originally seeded data
+
+Considered switching release storage to RDS/Aurora to make manual corrections
+easier via SQL - decided against it. The DJ Assault issue was a seeding
+accuracy problem, not a database technology problem; RDS/Aurora would carry
+the same risk of inaccurate data if seeded the same way, while adding real
+recurring cost (unlike DynamoDB's pay-per-request pricing), VPC networking
+for Lambda, and connection pooling via RDS Proxy - complexity that doesn't
+solve the actual problem. Staying on DynamoDB, correcting via
+`aws dynamodb update-item` or the console directly
+
+Scope
+- All 29 release records across the 6 entity types
+- For each: verify title, label, catalog number, year, and tracklist against
+  Discogs (primary source) and MusicBrainz/Wikimedia Commons where Discogs
+  is incomplete
+- Correct inaccurate fields directly in DynamoDB
+- Flag any release with no real-world match at all for removal, same
+  precedent as the Wave 6 "Crunk in the Trunk" pull
+
+Next Steps
+- Pull full release list via DynamoDB scan to build a working checklist
+- Go artist by artist, starting with Wave 6 given today's findings originated there
+- Correct Jefferson Ave. and Belle Isle Tech release records for DJ Assault first (already scoped)
+- Source an appropriate cover image for Belle Isle Tech
+- Decide whether Straight Up Detroit Sh*t Vol. 1 and Vol. 2 should be added as their own release entries
+
 ## 07/29/2026
 
 ### Terraform Evaluation — Deferred to New Project
