@@ -102,6 +102,7 @@ docs/         # Architecture diagrams
 - Validated data structure and API responses
 - Integrated Claude Code as agentic seeding workflow that automatically scans live DynamoDB tables before each wave to prevent duplicates and generate historically accurate entries.
 - Built multi-source image lookup tooling (Wikimedia Commons, Discogs, MusicBrainz/Cover Art Archive) to streamline sourcing licensing-cleared images before manual search
+- Conducting a manual accuracy audit of seeded release data against Discogs - AI-assisted seeding can generate plausible-sounding but inaccurate entries, so all release metadata and tracklists are being human-verified against primary sources
 
 ### Phase 4 — Auth & Admin (Complete)
 - Cognito User Pool deployed via SAM
