@@ -1,5 +1,28 @@
 # Dev Log
 
+## 08/03/2026
+
+### Belle Isle Tech Cover Image Replaced
+
+- Replaced the inappropriate cover image for DJ Assault's "Belle Isle Tech"
+  release, flagged during the 07/29 data integrity review as unsuitable for
+  a public archive regardless of the tracklist/label corrections still
+  pending for that release
+- Manually sourced a replacement image and uploaded it to the
+  `detroit-techno-archive-media` S3 bucket under the same key
+  (`releases/dj_assault_belle_isle_tech.jpg`), deleting and replacing the
+  original object rather than renaming, so no DynamoDB image field changes
+  were needed
+- Ran a CloudFront invalidation on the affected path to clear the edge
+  cache and confirmed the new image is serving correctly
+
+#### Next Steps
+- Continue the Release Data Accuracy Audit (07/31 scope): correct
+  Jefferson Ave. and Belle Isle Tech tracklist/label/catalog data against
+  Discogs
+- Decide whether Straight Up Detroit Sh*t Vol. 1 and Vol. 2 should be
+  added as their own release entries
+
 ## 07/31/2026
 
 ### Release Data Accuracy Audit — Planned
