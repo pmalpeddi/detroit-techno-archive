@@ -2,6 +2,47 @@
 
 ## 08/03/2026
 
+### Release Data Accuracy Audit — Tooling (continued)
+
+- First version of `audit_data_accuracy.py` produced a high false-positive
+  rate: well-known real tracks (Jeff Mills "The Bells", Robert Hood "Minus",
+  Theo Parrish "Yo Ya") were flagged as fabricated
+- Root cause: matching compared seeded notable_tracks against Discogs
+  *release* titles only, not individual track titles, and used whole-string
+  similarity that penalized short titles nested inside longer real titles
+- Fix 1: pull actual tracklists per release (not just release titles) as
+  the comparison pool
+- Fix 2: normalize + containment-aware matching before falling back to
+  difflib similarity, so "The Bells" matches inside "The Bells (Purpose
+  Maker Mix)" instead of scoring low on length difference
+- Fix 1 introduced a new false positive: short real titles (e.g. "I")
+  matched via containment against unrelated longer seeded titles (e.g.
+  "Ride") purely by substring coincidence — patched by requiring both
+  sides of a containment match to meet a minimum length
+- That patch then surfaced a coverage gap: Robert Hood's "Ride" (real,
+  Minimal Nation, 1994) came back unmatched, because
+  MAX_RELEASES_FOR_TRACKLIST (25) excluded the release before its
+  tracklist was pulled
+- Response: raised the release cap to 60, and added a printed line per
+  artist showing which Discogs artist ID/name was actually matched and how
+  many real titles were pulled — makes wrong-artist and low-coverage cases
+  visible instead of silent
+- Re-tested Robert Hood after both fixes: correctly matched Discogs artist
+  id=1136, pulled 623 real titles, "Minus" and "Ride" both resolved at
+  100%, "Never Grow Old" and "Baby Baby" remained correctly unmatched
+
+#### Takeaway
+- Treating the script's output as ground truth was the actual mistake, not
+  any single bug — every flag (✓ or ✗) still needs a quick manual check;
+  the tool's real value is narrowing 4-5 tracks/artist down to the 1-2 that
+  actually need research, not replacing that research
+
+#### Next Steps
+- Validated matching against known-answer cases (DJ Rolando, Jeff Mills,
+  Robert Hood) - all now resolve correctly
+- Run full 35-artist batch, review flagged tracks/duplicate images
+- Work through corrections artist by artist based on report output
+
 ### Belle Isle Tech Cover Image Replaced
 
 - Replaced the inappropriate cover image for DJ Assault's "Belle Isle Tech"
