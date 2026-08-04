@@ -1,5 +1,79 @@
 # Dev Log
 
+## 08/04/2026
+
+### Release Data Accuracy Audit — Tooling Refinement + First Full Run
+
+- Continued refining `audit_data_accuracy.py` after 08/03 false positives
+  (Jeff Mills "The Bells", Robert Hood "Minus", Theo Parrish "Yo Ya" all
+  incorrectly flagged as fabricated in the first version)
+- Root cause: matching compared seeded notable_tracks against Discogs
+  release titles only, with whole-string similarity that penalized short
+  titles nested inside longer real titles
+- Fix: pull individual track titles from each release's tracklist (not
+  just release titles) as the comparison pool, plus containment-aware
+  matching after normalizing (strip parenthetical remix/mix info, strip
+  punctuation)
+- That fix introduced new false positives during testing: short real
+  titles ("I") matching inside unrelated longer seeded titles ("Ride") via
+  raw substring containment
+- Patched with a minimum-length guard on containment matches, which then
+  surfaced a coverage gap - "Ride" (real Robert Hood track, Minimal
+  Nation 1994) wasn't in the pulled data because MAX_RELEASES_FOR_TRACKLIST
+  (25) was too low for his catalog depth
+- Raised the release cap to 60 and added a printed line per artist showing
+  the matched Discogs artist ID/name and title count pulled, to make
+  wrong-artist-match and low-coverage cases visible instead of silent
+- A second full run then surfaced two more false positives from
+  word-level (not just character-level) containment: "Impulse" matching
+  "Pulse", "Open Your Eyes" matching "Open" - fixed by requiring
+  containment matches to span at least 2 words, and requiring single-word
+  comparisons to clear a stricter 85% threshold instead of the general 72%
+- Separately diagnosed an apparent "stuck" run: Python fully buffers
+  stdout when redirected to a file, so `audit_report.txt` appeared frozen
+  for long stretches even though the script was actively working - fixed
+  with line-buffered output and a live `[12/35] Auditing X...` progress
+  line per artist
+- Added request timeouts (15s) to all three Discogs API calls as a
+  genuine-hang safeguard, separate from the buffering issue
+
+#### First Full 35-Artist Run
+- Completed successfully with the fixed matching logic
+- Spot-checked results against tracks already manually confirmed real
+  (DJ Rolando's Jaguar/Knights of the Jaguar, Jeff Mills' The Bells,
+  Robert Hood's Minus/Ride) - all correctly matched
+- Two likely false negatives flagged for manual Discogs re-check rather
+  than trusted as fake: Theo Parrish "Yo Ya" (known real release, just not
+  found under his artist page - possibly a different credited release
+  title or outside the 60-release cap), Underground Resistance "Jaguar"
+  (same track already confirmed real under DJ Rolando/Aztec Mystic -
+  likely credited to UR as parent label rather than as primary artist)
+- One suspicious ✓ flagged for manual re-check rather than trusted as
+  real: Octave One "Open Your Eyes" matched "On Your Level" at 74% -
+  likely coincidental word overlap, not the same track
+- `audit_report.txt` kept as a local working file (not committed) - it's
+  a point-in-time snapshot that goes stale as corrections are made, not
+  meant as permanent repo documentation
+
+#### Takeaway
+- Every fix this session traded one failure mode for another until the
+  test suite (known-answer artists: DJ Rolando, Jeff Mills, Robert Hood)
+  covered enough ground to catch it
+- Confirms the original design principle: script output narrows candidates,
+  it never replaces manual verification - true even now that the false
+  positive rate is much lower
+
+#### Next Steps
+- Work through the 35-artist report artist by artist, starting with
+  confirmed corrections already scoped (DJ Rolando: remove Los Niños and
+  Strings of Life UR Edit, add Ascesión; DJ Assault: already corrected
+  Belle Isle Tech image, tracklist/label corrections still pending)
+- Manually re-verify the three flagged uncertain cases (Yo Ya, UR Jaguar,
+  Open Your Eyes) before treating them as confirmed real or fake
+- Consider a Step Functions + Lambda batch-processing version of this
+  audit as a future serverless-architecture portfolio piece, once manual
+  corrections are underway
+
 ## 08/03/2026
 
 ### Release Data Accuracy Audit — Tooling (continued)

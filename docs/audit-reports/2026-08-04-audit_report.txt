@@ -1,0 +1,257 @@
+============================================================
+DUPLICATE IMAGE CHECK (all releases)
+============================================================
+  None found.
+
+============================================================
+TRACK VERIFICATION (per artist, vs Discogs)
+============================================================
+
+[1/35] Auditing DJ Rolando...
+  (matched Discogs artist "DJ Rolando" [id=1099], 776 real titles pulled)
+  ✓ Jaguar -- matches Discogs ("Jaguar ", 100%)
+  ✓ Knights of the Jaguar -- matches Discogs ("Knights Of The Jaguar EP", 95%)
+  ✗ Los Niños -- no confident match -- closest: "Los Picaros" (70%)
+  ✗ Strings of Life (UR Edit) -- no confident match -- closest: "Motions Of Love" (67%)
+
+[2/35] Auditing DJ Minx...
+  (matched Discogs artist "DJ Minx" [id=176792], 497 real titles pulled)
+  ✗ After Hours -- no confident match -- closest: "White Horses" (61%)
+  ✗ What Goes On -- no confident match -- closest: "White Horses" (58%)
+  ✗ Voices from the Shadows -- no confident match -- closest: "Everything Shows" (56%)
+  ✗ Come Into My World -- no confident match -- closest: "We Want The World" (63%)
+
+[3/35] Auditing Omar S...
+  (matched Discogs artist "Omar-S" [id=166506], 646 real titles pulled)
+  ✓ Thank U 4 Letting Me Be Myself -- matches Discogs ("Thank You For Letting Me Be Myself", 91%)
+  ✓ Here's What I Know You Want -- matches Discogs ("You Want", 95%)
+  ✓ The Shit (U Should Know by Now) -- matches Discogs ("The Best!", 75%)
+  ✗ New Day -- no confident match -- closest: "New Thang (Deep Late Session)" (62%)
+
+[4/35] Auditing Marcellus Pittman...
+  (matched Discogs artist "Marcellus Pittman" [id=134725], 434 real titles pulled)
+  ✗ We Ghetto -- no confident match -- closest: "Good Ol' Ghetto" (61%)
+  ✗ Unirhythm -- no confident match -- closest: "Unirhythm Green #1" (50%)
+
+[5/35] Auditing Rick Wilhite...
+  (matched Discogs artist "Rick Wilhite" [id=5341], 408 real titles pulled)
+  ✗ Vibes New & Old -- no confident match -- closest: "Vibes - New & Rare Music (Part F)" (61%)
+  ✗ Straight Up -- no confident match -- closest: "Travelling Light" (52%)
+
+[6/35] Auditing DJ Assault...
+  (matched Discogs artist "DJ Assault" [id=1227], 643 real titles pulled)
+  ✓ Ass-N-Titties -- matches Discogs ("Ass-N-Titties (Remix)", 100%)
+  ✓ Sex on the Beach -- matches Discogs ("Sex On The Beach", 100%)
+  ✗ Come On -- no confident match -- closest: "On & On" (67%)
+  ✓ Belle Isle Tech -- matches Discogs ("Belle Isle Tech ", 100%)
+  ✓ Straight Up Detroit Shit -- matches Discogs ("Straight Up Detroit Sh*t", 96%)
+
+[7/35] Auditing Dopplereffekt...
+  (matched Discogs artist "Dopplereffekt" [id=1220], 600 real titles pulled)
+  ✓ Sterilization -- matches Discogs ("Sterilization [Racial Hygiene And Selective Breeding]", 100%)
+  ✓ Infophysix -- matches Discogs ("Infophysix", 100%)
+  ✓ Pornoviewer -- matches Discogs ("Pornoviewer", 100%)
+  ✗ Superior Race -- no confident match -- closest: "Conspiracy" (52%)
+  ✓ Cellular Automata -- matches Discogs ("Cellular Automata", 100%)
+
+[8/35] Auditing Stacey Pullen...
+  (matched Discogs artist "Stacey Pullen" [id=67226], 597 real titles pulled)
+  ✗ Elevation -- no confident match -- closest: "Evil Vexation" (50%)
+  ✗ Fiery Flower -- no confident match -- closest: "Friendly Fire" (56%)
+  ✗ Lost In My Own World -- no confident match -- closest: "Live In Montreal (Stereo)" (56%)
+  ✗ Cosmic Movement -- no confident match -- closest: "Ooh!  I Love It" (50%)
+
+[9/35] Auditing Eddie Fowlkes...
+  (matched Discogs artist "Eddie Fowlkes" [id=180252], 522 real titles pulled)
+  ✓ Goodbye Kiss -- matches Discogs ("Goodbye Kiss", 100%)
+  ✓ Fun With Machines -- matches Discogs ("Beyond The Machines", 72%)
+  ✗ Let's Get Together -- no confident match -- closest: "Let's Go (Remixes)" (62%)
+
+[10/35] Auditing Drexciya...
+  (matched Discogs artist "Drexciya" [id=1172], 677 real titles pulled)
+  ✗ The Unknown Aquatic Habitat -- no confident match -- closest: "Drexciya 4 -  The Unknown Aquazone " (55%)
+  ✓ Aquatic Invasion -- matches Discogs ("Aquatic Invasion", 100%)
+  ✗ Sea Quake -- no confident match -- closest: "Spherique" (56%)
+  ✓ Bubble Metropolis -- matches Discogs ("Bubble Metropolis", 100%)
+  ✓ Wavejumper -- matches Discogs ("Wavejumper", 100%)
+
+[11/35] Auditing Derrick May...
+  (matched Discogs artist "Derrick May" [id=650], 705 real titles pulled)
+  ✓ Strings of Life -- matches Discogs ("Strings Of Life", 100%)
+  ✓ Nude Photo -- matches Discogs ("Nude Photo", 100%)
+  ✓ It Is What It Is -- matches Discogs ("It Is What It Is", 100%)
+  ✓ Kao-tic Harmony -- matches Discogs ("Icon / Kao-Tic Harmony", 95%)
+  ✓ Beyond the Dance -- matches Discogs ("Beyond The Dance", 100%)
+
+[12/35] Auditing Blake Baxter...
+  (matched Discogs artist "Blake Baxter" [id=1100], 597 real titles pulled)
+  ✓ When We Used To Play -- matches Discogs ("When We Used To Play", 100%)
+  ✓ Sexuality -- matches Discogs ("Sexuality", 100%)
+  ✓ Dream Sequence One -- matches Discogs ("Dream Sequence", 95%)
+
+[13/35] Auditing Alan Oldham...
+  (matched Discogs artist "Alan Oldham" [id=4913], 626 real titles pulled)
+  ✗ Bionic -- no confident match -- closest: "Nico" (50%)
+  ✗ Cyberlord -- no confident match -- closest: "Boil Order" (50%)
+  ✗ Aggressor -- no confident match -- closest: "Progress" (50%)
+  ✗ Into the Machine -- no confident match -- closest: "Spin Machine" (71%)
+
+[14/35] Auditing Carl Craig...
+  (matched Discogs artist "Carl Craig" [id=871], 533 real titles pulled)
+  ✓ At Les -- matches Discogs ("At Les (Metapop Remixes)", 100%)
+  ✓ Throw -- matches Discogs ("Throw (Slam's RTM Remix)", 100%)
+  ✓ Science Fiction -- matches Discogs ("Science Fiction", 100%)
+  ✓ Desire -- matches Discogs ("Desire (Secret Of Elements Remix)", 100%)
+  ✓ Sandstorm -- matches Discogs ("Sandstorms (Siavash Amini Remix)", 95%)
+
+[15/35] Auditing Moodymann...
+  (matched Discogs artist "Moodymann" [id=1094], 529 real titles pulled)
+  ✓ Dem Young Sconies -- matches Discogs ("Dem Young Sconies", 100%)
+  ✓ I Can't Kick This Feeling When It Hits -- matches Discogs ("I Can't Kick This Feeling When It Hits", 100%)
+  ✓ Shades of Jae -- matches Discogs ("Shades Of Jae", 100%)
+  ✓ Don't Be Misled -- matches Discogs ("Don't Be Misled!", 100%)
+  ✓ Sloppy Cosmic -- matches Discogs ("Sloppy Cosmic", 100%)
+
+[16/35] Auditing Kevin Saunderson...
+  (matched Discogs artist "Kevin Saunderson" [id=3386], 647 real titles pulled)
+  ✓ Big Fun -- matches Discogs ("Big Fun (Remixes)", 100%)
+  ✓ Good Life -- matches Discogs ("Good Life (Mathew Jonson's Acid Mix)", 100%)
+  ✓ Just Want Another Chance -- matches Discogs ("Just Want Another Chance (John Tejada Remix)", 100%)
+  ✓ Velocity Funk -- matches Discogs ("Velocity Funk (Joe Brunning Remix)", 100%)
+  ✓ Pump The Move -- matches Discogs ("Pump The Move (Samuel L Session Remix)", 100%)
+
+[17/35] Auditing Octave One...
+  (matched Discogs artist "Octave One" [id=1489], 520 real titles pulled)
+  ✓ Blackwater -- matches Discogs ("Blackwater (Alter Ego Vocal Mix)", 100%)
+  ✓ I Believe -- matches Discogs ("I Believe", 100%)
+  ✗ Life Story -- no confident match -- closest: "Endustry" (56%)
+  ✓ Open Your Eyes -- matches Discogs ("On Your Level", 74%)
+  ✓ The X-Files -- matches Discogs ("The "X" Files", 100%)
+
+[18/35] Auditing Kai Alcé...
+  (matched Discogs artist "Kai Alcé" [id=26669], 652 real titles pulled)
+  ✗ Phuture Thang -- no confident match -- closest: "Purple Rain (Mousse T's Home A Lone Mix)" (58%)
+  ✗ Movin' On -- no confident match -- closest: "Movin Thru" (67%)
+
+[19/35] Auditing Claude Young...
+  (matched Discogs artist "Claude Young" [id=879], 665 real titles pulled)
+  ✗ What Happened -- no confident match -- closest: "Light Speed" (58%)
+  ✗ Impulse -- no confident match -- closest: "Pulse" (50%)
+  ✗ Metaphysics -- no confident match -- closest: "Rake Tactics (Harvey Lane Remix)" (50%)
+
+[20/35] Auditing Anthony "Shake" Shakir...
+  (matched Discogs artist "Anthony Shakir" [id=10190], 690 real titles pulled)
+  ✗ Frictionalism -- no confident match -- closest: "Frictionalized" (50%)
+  ✗ The Groove That Won't Stop -- no confident match -- closest: "The Great Gigolo Swindle" (52%)
+  ✗ Rogue State -- no confident match -- closest: "New Start" (60%)
+  ✗ Detroit 2 Frankfurt -- no confident match -- closest: "Detroit Techno" (55%)
+
+[21/35] Auditing Mad Mike Banks...
+  (matched Discogs artist "Mike Banks" [id=22115], 582 real titles pulled)
+  ✓ Jaguar -- matches Discogs ("Jaguar", 100%)
+  ✓ X-102 Discovers the Rings of Saturn -- matches Discogs ("Discovers The Rings Of Saturn", 95%)
+  ✓ Electronic Warfare -- matches Discogs ("Electronic Warfare (Designs For Sonic Revolutions)", 100%)
+  ✗ Frictional Nevada -- no confident match -- closest: "Frictional Beat No.4" (65%)
+
+[22/35] Auditing Delano Smith...
+  (matched Discogs artist "Delano Smith" [id=47711], 612 real titles pulled)
+  ✗ You Don't Know -- no confident match -- closest: "Don't Stop" (58%)
+  ✓ If Not for You -- matches Discogs ("For You", 95%)
+  ✗ The Love We Have -- no confident match -- closest: "The Life I Lead" (58%)
+
+[23/35] Auditing Jeff Mills...
+  (matched Discogs artist "Jeff Mills" [id=205], 858 real titles pulled)
+  ✓ The Bells -- matches Discogs ("The Bells (10th Anniversary)", 100%)
+  ✓ Cycle 30 -- matches Discogs ("Cycle 30", 100%)
+  ✓ Tomorrow Comes the Harvest -- matches Discogs ("Tomorrow Comes The Harvest", 100%)
+  ✓ Growth -- matches Discogs ("Growth", 100%)
+
+[24/35] Auditing Chez Damier...
+  (matched Discogs artist "Chez Damier" [id=1552], 503 real titles pulled)
+  ✓ Can You Feel It -- matches Discogs ("Can You Feel It", 100%)
+  ✓ Forever Monna -- matches Discogs ("Forever Monna (Mix 1)", 100%)
+  ✓ I Never Knew Love -- matches Discogs ("I Never Knew Love", 100%)
+
+[25/35] Auditing Suburban Knight...
+  (matched Discogs artist "Suburban Knight" [id=855], 625 real titles pulled)
+  ✓ The Art of Stalking -- matches Discogs ("The Art Of Stalking (Ludovic's Favorite Mix)", 100%)
+  ✓ Nocturbulous Behavior -- matches Discogs ("Nocturbulous Behavior", 100%)
+  ✗ My Sol Dark Funk -- no confident match -- closest: "My Sol Dark Direction" (70%)
+  ✗ Vanguard -- no confident match -- closest: "Avanger" (50%)
+
+[26/35] Auditing Terrence Dixon...
+  (matched Discogs artist "Terrence Dixon" [id=1171], 530 real titles pulled)
+  ✓ From the Far Future -- matches Discogs ("From The Far Future", 100%)
+  ✗ Collapse -- no confident match -- closest: "Ectoplasm" (50%)
+  ✗ Your Mind is a Temple -- no confident match -- closest: "Goldmin Theme" (53%)
+  ✗ Blank Expressions -- no confident match -- closest: "Wax Sessions #1" (58%)
+  ✗ Cosmic Abstract -- no confident match -- closest: "Bonus Tracks" (52%)
+
+[27/35] Auditing Robert Hood...
+  (matched Discogs artist "Robert Hood" [id=1136], 623 real titles pulled)
+  ✓ Minus -- matches Discogs ("Minus", 100%)
+  ✓ Moveable Parts -- matches Discogs ("Moveable Parts Chapter 2", 95%)
+  ✗ Never Grow Old -- no confident match -- closest: "Never Had It So Good (Freddy's Fresh Mix)" (59%)
+  ✗ Baby Baby -- no confident match -- closest: "So Many Ways (Force Mass Motion Remix)" (48%)
+  ✓ Ride -- matches Discogs ("Ride", 100%)
+
+[28/35] Auditing Richie Hawtin...
+  (matched Discogs artist "Richie Hawtin" [id=835], 959 real titles pulled)
+  ✓ Spastik -- matches Discogs ("Spastik", 100%)
+  ✓ Acid Rain -- matches Discogs ("Acid King", 78%)
+  ✓ Plastique -- matches Discogs ("Plastique", 100%)
+  ✓ Consumed -- matches Discogs ("Consumed", 100%)
+  ✗ Motivator -- no confident match -- closest: "Mystic Vibrations" (50%)
+
+[29/35] Auditing DJ Godfather...
+  (matched Discogs artist "DJ Godfather" [id=8828], 826 real titles pulled)
+  ✗ Crunk in the Trunk -- no confident match -- closest: "Dancing In The Sun" (67%)
+  ✗ Bass Like Dat -- no confident match -- closest: "Pass The Dutch" (59%)
+  ✓ Get Up -- matches Discogs ("Get Up", 100%)
+
+[30/35] Auditing Juan Atkins...
+  (matched Discogs artist "Juan Atkins" [id=1102], 649 real titles pulled)
+  ✓ No UFOs -- matches Discogs ("No UFO's", 93%)
+  ✓ Night Drive -- matches Discogs ("Night Drive (Thru-Babylon)", 100%)
+  ✗ Berlin -- no confident match -- closest: "Borderland" (50%)
+  ✓ The Chase -- matches Discogs ("The Chase", 100%)
+  ✓ Off To Battle -- matches Discogs ("Off To Battle", 100%)
+
+[31/35] Auditing Cybotron...
+  (matched Discogs artist "Cybotron" [id=3863], 890 real titles pulled)
+  ✓ Alleys of Your Mind -- matches Discogs ("Alleys Of Your Mind", 100%)
+  ✓ Cosmic Cars -- matches Discogs ("Cosmic Cars", 100%)
+  ✓ Clear -- matches Discogs ("Clear (Remix)", 100%)
+  ✓ Enter -- matches Discogs ("Enter", 100%)
+
+[32/35] Auditing Aux 88...
+  (matched Discogs artist "Aux 88" [id=786], 786 real titles pulled)
+  ✓ Is It Man or Machine? -- matches Discogs ("Is It Man Or Machine", 100%)
+  ✓ Made in Detroit -- matches Discogs ("Do It In Detroit", 77%)
+  ✓ Electro Invasion -- matches Discogs ("My Electro Visions (Acapella)", 76%)
+  ✓ Bass Magnetic -- matches Discogs ("Bass Magnetic", 100%)
+  ✗ Tokyo -- no confident match -- closest: "Black Tokyo (Niko Marks Mix)" (50%)
+
+[33/35] Auditing Kenny Larkin...
+  (matched Discogs artist "Kenny Larkin" [id=1568], 666 real titles pulled)
+  ✗ Yoyo -- no confident match -- closest: "Myrys (1978)" (44%)
+  ✗ Dance of Life -- no confident match -- closest: "Share My Life (12" #1)" (62%)
+  ✓ Tedra -- matches Discogs ("Tedra", 100%)
+  ✓ Dark Comedy -- matches Discogs ("Dark Comedy Pt 2", 95%)
+  ✓ Azimuth -- matches Discogs ("Azimuth", 100%)
+
+[34/35] Auditing Theo Parrish...
+  (matched Discogs artist "Theo Parrish" [id=149], 564 real titles pulled)
+  ✗ Falling Up -- no confident match -- closest: "Fall Apart" (60%)
+  ✗ Yo Ya -- no confident match -- closest: "Yemaya (John Beltran Remix)" (55%)
+  ✗ Black Dialogue -- no confident match -- closest: "Black Mist" (58%)
+  ✗ The Rotating Assembly -- no confident match -- closest: "The Timpani  Waves EP" (54%)
+  ✗ Synthetic Flemm -- no confident match -- closest: "Romantic Love" (50%)
+
+[35/35] Auditing Underground Resistance...
+  (matched Discogs artist "Underground Resistance" [id=1160], 584 real titles pulled)
+  ✓ Electronic Warfare -- matches Discogs ("Electronic Warfare", 100%)
+  ✗ Jaguar -- no confident match -- closest: "Agua" (50%)
+  ✓ Riot -- matches Discogs ("Riot", 100%)
+  ✗ Frictional Nevada -- no confident match -- closest: "Festina Lente" (53%)
+  ✗ Galaxy 2 Galaxy -- no confident match -- closest: "Gamma Scale" (46%)
