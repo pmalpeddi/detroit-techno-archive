@@ -1,5 +1,81 @@
 # Dev Log
 
+## 08/05/2026
+
+### Frontend Bug — Releases Section Showing Unrelated Releases
+
+- While reviewing DJ Rolando's artist page as part of the manual correction
+  pass, noticed "Galaxy 2 Galaxy" listed under his Releases section -
+  confirmed via research this is incorrect: Galaxy 2 Galaxy is Mad Mike
+  Banks' own project name, not something DJ Rolando was ever part of
+  (DJ Rolando was a general UR member 1994-2004, distinct from Galaxy 2
+  Galaxy specifically)
+- Traced the release record itself first (`aws dynamodb scan` on
+  `detroit-techno-releases` filtered by title) - confirmed the DynamoDB
+  data is correct: `artist: "Underground Resistance"`, not DJ Rolando, so
+  this ruled out a seeding/data error and pointed to a frontend bug
+- Found the actual cause in `frontend/src/pages/ArtistDetail.js`, the
+  `artistReleases` filter:
+
+artist?.associated_acts?.some(act => r.artist === act)
+
+  This matches any release whose `artist` field equals a string in the
+  current artist's `associated_acts` list - so any artist with
+  "Underground Resistance" listed as an associated act pulls in every
+  UR-credited release, not just releases they personally appear on
+- Scoped the actual blast radius before fixing anything:
+  - Pulled all 35 artists' `associated_acts` values - 15 artists have
+    non-empty lists (UR, 3 Chairs, The Belleville Three, Inner City,
+    E-Dancer, Final Cut, Cybotron, John Acquaviva)
+  - Cross-referenced against all 29 releases' `artist` values - only
+    "Underground Resistance" and "Inner City" actually appear as a
+    release-level artist credit; the other collective names in
+    `associated_acts` are currently inert (no matching release exists yet)
+  - Real impact: 3 releases (Interstellar Fugitives, Electronic Warfare,
+    Galaxy 2 Galaxy) incorrectly appearing on 6 artist pages (DJ Rolando,
+    Dopplereffekt, Drexciya, Mad Mike Banks, Jeff Mills, Robert Hood) -
+    all UR members whose page shows every UR release, not just their own
+  - One edge case: Kevin Saunderson's "Inner City" match is not a bug -
+    Inner City is his own alias/project, not a separate collective, so
+    that match is currently correct despite using the same fuzzy logic
+- Decision: removing the `associated_acts` check outright would fix the
+  6-artist UR false-positive but would also break the legitimate Inner
+  City/Big Fun match on Kevin Saunderson's page - need a fix that
+  distinguishes "artist's own alias" from "artist's multi-person
+  collective" rather than treating both the same way
+- Deferred the actual code fix pending that distinction; not resolved yet
+
+#### Takeaway
+- What looked like a sprawling data problem across many artists turned out
+  to be a single shared frontend bug with a narrow, traceable blast radius
+  (3 releases, 6 pages) - worth fully scoping impact before assuming a fix
+  requires touching every affected record individually
+
+### Release Data Accuracy Audit — Working Through Report (In Progress)
+
+- Started working through the 08/04 full audit report
+  (`docs/audit-reports/2026-08-04-audit_report.txt`) artist by artist,
+  beginning with DJ Rolando
+- Confirmed via the artist detail page UI itself (not just the audit
+  script) that "Knights of the Jaguar" is legitimate - it's an EP title,
+  not a fabricated track, consistent with the script's 95% match
+- Corrections still pending for DJ Rolando: remove "Los Niños" and
+  "Strings of Life (UR Edit)" from `notable_tracks`, likely add
+  "Ascesión" (confirmed real B-side)
+- Continuing artist-by-artist review using the report as a checklist -
+  many artists cleared with all ✓ matches, remainder need individual
+  Discogs verification per the report's ✗ flags
+
+#### Next Steps
+- Fix `ArtistDetail.js` release-matching logic to distinguish personal
+  aliases (Inner City) from multi-person collectives (Underground
+  Resistance) rather than treating `associated_acts` as one flat list
+- Verify the 6 affected UR-member artist pages after the fix
+- Complete DJ Rolando's `notable_tracks` correction (DynamoDB update)
+- Continue working through remaining flagged artists from the audit
+  report, prioritizing artists with the most ✗ flags (Alan Oldham, Stacey
+  Pullen, Theo Parrish, Terrence Dixon)
+
 ## 08/04/2026
 
 ### Release Data Accuracy Audit — Tooling Refinement + First Full Run
